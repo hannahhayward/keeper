@@ -15,5 +15,9 @@ namespace keeper.Services
     {
      return _kr.Create(keep);
     }
+    public List<Keep> GetAll()
+    {
+      return _kr.GetAll();
+    }
   }
 }
