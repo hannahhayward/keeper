@@ -70,7 +70,7 @@ namespace keeper.Repositories
     internal void Delete(int id)
     {
       string sql = @"
-      DELETR FROM keeps 
+      DELETE FROM keeps 
       WHERE id = @Id;";
       _db.Execute(sql, new { id });
     }
