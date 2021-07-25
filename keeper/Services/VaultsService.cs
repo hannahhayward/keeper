@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using keeper.Models;
 using keeper.Repositories;
 
@@ -7,10 +8,13 @@ namespace keeper.Services
   public class VaultsService
   {
     private readonly VaultsRepository _vr;
-    public VaultsService(VaultsRepository vr)
+    private readonly VaultKeepsRepository _vkr;
+    public VaultsService(VaultsRepository vr, VaultKeepsRepository vkr)
     {
       _vr = vr;
+      _vkr = vkr;
     }
+
     public Vault GetById(int id)
     {
       var vault = _vr.GetById(id);
@@ -36,6 +40,11 @@ namespace keeper.Services
         return _vr.Update(vault);
       }
       throw new Exception("nice try buddy this isnt yours");
+    }
+    internal List<Keep> GetKeepsByVaultId(int id)
+    {
+      var keeps = _vkr.GetKeepsByVaultId(id);
+      return keeps;
     }
     public void Delete(int id, string userId)
     {

@@ -29,8 +29,7 @@ namespace keeper.Services
         throw new Exception("cannot find a keep with that Id");
       }
       return k;
-    }
-    public Keep Update(Keep keep, string userId)
+    }    public Keep Update(Keep keep, string userId)
     {
       Keep original = _kr.GetById(keep.Id);
       if(keep == null)

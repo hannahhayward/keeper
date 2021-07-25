@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CodeWorks.Auth0Provider;
 using keeper.Models;
@@ -66,6 +67,20 @@ namespace keeper.Controllers
           return BadRequest(e.Message);
       }
     }
+    [HttpGet("{id}/keeps")]
+    public ActionResult<List<Keep>> GetKeepsByVaultId(int id)
+    {
+      try
+      {
+          List<Keep> keeps = _vs.GetKeepsByVaultId(id);
+          return Ok(keeps);
+      }
+      catch (System.Exception e)
+      {
+          return BadRequest(e.Message);
+      }
+    }
+    
     [Authorize]
     [HttpDelete("{id}")]
     public async Task<ActionResult<Vault>> Delete(int id)
