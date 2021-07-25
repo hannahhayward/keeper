@@ -23,9 +23,11 @@ namespace keeper.Repositories
     internal List<Keep> GetKeepsByVaultId(int id)
     {
       string sql = @"
-      SELECT * 
-      FROM keeps k
-      JOIN account a ON a.id = k.creatorId
+      SELECT 
+      k.*,
+      k.id AS vaultkeepsId
+      FROM vaultkeeps vk
+      JOIN keeps k ON vk.keepId = k.id
       WHERE vaultId = @id;";
       return _db.Query<Keep, Profile, Keep>(sql, (k,p)=>
       {
@@ -38,7 +40,7 @@ namespace keeper.Repositories
       string sql = @"
       SELECT * 
       FROM vaults v
-      JOIN account a ON a.id = v.creatorId
+      JOIN accounts a ON a.id = v.creatorId
       WHERE keepId = @id;";
       return _db.Query<Vault, Profile, Vault>(sql, (v,p)=>
       {
@@ -51,8 +53,7 @@ namespace keeper.Repositories
       string sql = @"
       INSERT INTO
         vaultkeeps(creatorId, vaultId, keepId)
-      VALUES(@CreatorId, @VaultId, @KeepId)
-      SELECT LAST_INSERT_ID();";
+      VALUES(@CreatorId, @VaultId, @KeepId);";
       vk.Id = _db.ExecuteScalar<int>(sql, vk);
       return vk;
     }
