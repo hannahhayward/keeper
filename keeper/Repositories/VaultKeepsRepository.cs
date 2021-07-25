@@ -18,13 +18,36 @@ namespace keeper.Repositories
       string sql = @"
       SELECT * 
       FROM keeps k
-      JOIN account a ON a.id = k.accountId
+      JOIN account a ON a.id = k.creatorId
       WHERE vaultId = @id;";
       return _db.Query<Keep, Profile, Keep>(sql, (k,p)=>
       {
         k.Creator = p;
         return k;
       }, new { id }).ToList();
+    }
+    internal List<Vault> GetVaultsByKeepId(int id)
+    {
+      string sql = @"
+      SELECT * 
+      FROM vaults v
+      JOIN account a ON a.id = v.creatorId
+      WHERE keepId = @id;";
+      return _db.Query<Vault, Profile, Vault>(sql, (v,p)=>
+      {
+        v.Creator = p;
+        return v;
+      }, new { id }).ToList();
+    }
+    internal VaultKeep Create(VaultKeep vk)
+    {
+      string sql = @"
+      INSERT INTO
+        vaultkeeps(creatorId, vaultId, keepId)
+      VALUES(@CreatorId, @VaultId, @KeepId)
+      SELECT LAST_INSERT_ID();";
+      vk.Id = _db.ExecuteScalar<int>(sql, vk);
+      return vk;
     }
   }
 }

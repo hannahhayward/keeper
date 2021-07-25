@@ -63,6 +63,20 @@ namespace keeper.Controllers
           return BadRequest(e.Message);
       }
     }
+    [HttpGet("{id}/vaults")]
+    public ActionResult<List<Vault>> GetVaultsByKeepId(int id)
+    {
+      try
+      {
+          List<Vault> vaults = _ks.GetVaultsByKeepId(id);
+          return Ok(vaults);
+      }
+      catch (System.Exception e)
+      {
+          
+          return BadRequest(e.Message);
+      }
+    }
     [HttpPut("{id}")]
     [Authorize]
     public async Task<ActionResult<Keep>> Update(int id, [FromBody] Keep keep)

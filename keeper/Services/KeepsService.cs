@@ -9,9 +9,12 @@ namespace keeper.Services
   public class KeepsService
   {
     private readonly KeepsRepository _kr;
-    public KeepsService(KeepsRepository kr)
+    private readonly VaultKeepsRepository _vkr;
+
+    public KeepsService(KeepsRepository kr, VaultKeepsRepository vkr)
     {
       _kr = kr;
+      _vkr = vkr;
     }
     public Keep Create(Keep keep)
     {
@@ -29,7 +32,13 @@ namespace keeper.Services
         throw new Exception("cannot find a keep with that Id");
       }
       return k;
-    }    public Keep Update(Keep keep, string userId)
+    }
+    internal List<Vault> GetVaultsByKeepId(int id)
+    {
+      var vaults = _vkr.GetVaultsByKeepId(id);
+      return vaults;
+    }
+    public Keep Update(Keep keep, string userId)
     {
       Keep original = _kr.GetById(keep.Id);
       if(keep == null)

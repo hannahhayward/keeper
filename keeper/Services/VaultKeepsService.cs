@@ -1,3 +1,4 @@
+using keeper.Models;
 using keeper.Repositories;
 
 namespace keeper.Services
@@ -9,5 +10,9 @@ namespace keeper.Services
     {
       _vkr = vkr;
     }
-  }
+    internal VaultKeep Create(VaultKeep vk)
+    {
+      return _vkr.Create(vk);
+    }
+}
 }
