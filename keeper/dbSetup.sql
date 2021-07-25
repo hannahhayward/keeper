@@ -19,4 +19,14 @@ CREATE TABLE IF NOT EXISTS keeps(
   keeps INT COMMENT 'keeps',
   FOREIGN KEY(creatorId) REFERENCES accounts(id) ON DELETE CASCADE
 ) default charset utf8 COMMENT '';
+CREATE TABLE IF NOT EXISTS vaults(
+  id INT AUTO_INCREMENT NOT NULL primary key COMMENT 'primary key',
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
+  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
+  name varchar(255) COMMENT ' Name',
+  creatorId VARCHAR(255) COMMENT 'FK: accounts Id',
+  description varchar(255) COMMENT ' description',
+  isPrivate TINYINT COMMENT 'privacy',
+  FOREIGN KEY(creatorId) REFERENCES accounts(id) ON DELETE CASCADE
+) default charset utf8 COMMENT '';
  DROP Table keeps;
