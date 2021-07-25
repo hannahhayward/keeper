@@ -15,6 +15,7 @@ namespace keeper.Repositories
   internal Vault GetById(int id)
   {
     string sql = @"
+    SELECT
     v.*,
     a.*
     FROM vaults v
