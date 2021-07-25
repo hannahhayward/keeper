@@ -13,6 +13,13 @@ namespace keeper.Repositories
     {
       _db = db;
     }
+    internal VaultKeep getOne(int id)
+    {
+      string sql = @"
+      SELECT * FROM vaultkeeps
+      WHERE id = @id;";
+      return _db.QueryFirstOrDefault<VaultKeep>(sql, new { id });
+    }
     internal List<Keep> GetKeepsByVaultId(int id)
     {
       string sql = @"
@@ -48,6 +55,12 @@ namespace keeper.Repositories
       SELECT LAST_INSERT_ID();";
       vk.Id = _db.ExecuteScalar<int>(sql, vk);
       return vk;
+    }
+    internal void Delete(int id){
+      string sql = @"
+      DELETE FROM vaultkeeps
+      WHERE id = @id;";
+     _db.Execute(sql, new { id });
     }
   }
 }

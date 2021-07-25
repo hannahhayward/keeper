@@ -18,16 +18,44 @@ namespace keeper.Controllers
     }
     [HttpPost]
     [Authorize]
-    public async Task<ActionResult<VaultKeep>> Create([FromBody] VaultKeep vaultKeep, [FromBody] Vault vault, [FromBody] Keep keep)
+    public async Task<ActionResult<VaultKeep>> Create([FromBody] VaultKeep vaultKeep)
+    {
+      try
+      {
+          return Ok(_vks.Create(vaultKeep));
+      }
+      catch (System.Exception e)
+      {
+          return BadRequest(e.Message);
+      }
+    }
+    [HttpGet("{id}")]
+    public ActionResult<VaultKeep> GetOne(int id)
+    {
+      try
+      {
+          VaultKeep vk = _vks.GetOne(id);
+          return Ok(vk);
+      }
+      catch (System.Exception e)
+      {
+          
+          return BadRequest(e.Message);
+      }
+    }
+    [Authorize]
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<VaultKeep>> Delete(int id)
     {
       try
       {
           Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
-          vaultKeep.CreatorId = userInfo.Id;
-          Vault vaultInfo = _
+          _vks.Delete(id, userInfo.Id);
+          return Ok("vaultkeep has been deleted");
       }
       catch (System.Exception e)
       {
+          
           return BadRequest(e.Message);
       }
     }
