@@ -16,15 +16,16 @@ namespace keeper.Controllers
     {
       _vks = vks;
     }
-    [HttpPost]
     [Authorize]
+    [HttpPost]
     public async Task<ActionResult<VaultKeep>> Create([FromBody] VaultKeep vaultKeep)
     {
       try
       {
         Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
-        vaultKeep.CreatorId = userInfo.Id;
-        return Ok(_vks.Create(vaultKeep));
+        VaultKeep newvk = _vks.Create(vaultKeep);
+        newvk.CreatorId = userInfo?.Id;
+        return Ok(newvk);
       }
       catch (System.Exception e)
       {

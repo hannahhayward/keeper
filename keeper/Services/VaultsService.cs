@@ -15,16 +15,18 @@ namespace keeper.Services
       _vkr = vkr;
     }
 
-    public Vault GetById(int id)
+    public Vault GetById(int id, string userId)
     {
       var vault = _vr.GetById(id);
       if(vault == null)
       {
         throw new Exception("cannot find vault with that Id");
       }
+      if(userId != vault.CreatorId){
       if(vault.IsPrivate != false)
       {
         throw new Exception("this vault is private");
+      }
       }
       return vault;
     }
@@ -32,13 +34,13 @@ namespace keeper.Services
     {
       return _vr.Create(vault);
     }
-    public Vault Update(Vault vault, string userId)
+    public Vault Update(Vault vault, string userId, int id)
     {
-      Vault original = _vr.GetById(vault.Id);
+      Vault original = _vr.GetById(id);
       if(vault == null){
         throw new Exception("cannot find vault with that Id");
       }
-      if(original.CreatorId == vault.CreatorId)
+      if(original.CreatorId == userId)
       {
         vault.IsPrivate = vault.IsPrivate == original.IsPrivate ? vault.IsPrivate : original.IsPrivate;
         return _vr.Update(vault);

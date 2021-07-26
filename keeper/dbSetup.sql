@@ -46,4 +46,4 @@ CREATE TABLE IF NOT EXISTS profiles(
   email varchar(255) COMMENT 'User Email',
   picture varchar(255) COMMENT 'User Picture'
 ) default charset utf8 COMMENT '';
- DROP Table vaultkeeps;
+ DROP Table keeps;

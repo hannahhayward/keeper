@@ -18,11 +18,12 @@ namespace keeper.Controllers
       _vs = vs;
     }
     [HttpGet("{id}")]
-    public ActionResult<Vault> GetById(int id)
+    public async  Task<ActionResult<Vault>> GetById(int id)
     {
       try
       {
-          Vault vault = _vs.GetById(id);
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+          Vault vault = _vs.GetById(id, userInfo?.Id);
           return Ok(vault);
       }
       catch (System.Exception e)
@@ -57,8 +58,8 @@ namespace keeper.Controllers
       {
           Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
           vault.Id = id;
-          vault.CreatorId = userInfo.Id;
-          Vault newVault = _vs.Update(vault, userInfo.Id);
+          vault.CreatorId = userInfo?.Id;
+          Vault newVault = _vs.Update(vault, userInfo.Id, id);
           newVault.Creator = userInfo;
           return Ok(newVault);
       }
