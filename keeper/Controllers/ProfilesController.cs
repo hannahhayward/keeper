@@ -49,7 +49,25 @@ namespace keeper.Controllers
       try
       {
         List<Vault> vaults = _ps.GetVaultsByProfileId(id);
-        return Ok(vaults);
+        List<Vault> publicvaults = new List<Vault>();
+        foreach(var vault in vaults)
+        {
+          if(vault.IsPrivate == false)
+          {
+            publicvaults.Add(vault);
+          }
+        }
+            return publicvaults;
+        // for (int i = 0; i < vaults.Count; i++)
+        // {
+        //     if(vaults[i].IsPrivate != false)
+        //     {
+        //       vaults.Remove(vaults[i]);
+        //       return vaults;
+        //     }
+        //     return vaults;
+        // }
+        // return Ok(vaults);
       }
       catch (System.Exception e)
       {
