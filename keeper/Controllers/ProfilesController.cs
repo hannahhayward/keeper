@@ -18,7 +18,6 @@ namespace keeper.Controllers
       _ps = ps;
     }
     [HttpGet("{id}")]
-    [Authorize]
     public ActionResult<Profile> GetProfile(string id)
       {
         try
@@ -32,7 +31,6 @@ namespace keeper.Controllers
           }
         }
     [HttpGet("{id}/keeps")]
-    [Authorize]
     public ActionResult<List<Keep>> GetKeepsByProfileId(string id)
     {
       try
@@ -46,7 +44,6 @@ namespace keeper.Controllers
       }
     }
     [HttpGet("{id}/vaults")]
-    [Authorize]
     public ActionResult<List<Vault>> GetVaultsByProfileId(string id)
     {
       try
