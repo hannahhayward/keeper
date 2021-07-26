@@ -7,11 +7,20 @@
 </template>
 
 <script>
-import { computed } from '@vue/runtime-core'
+import { computed, onMounted } from '@vue/runtime-core'
 import { AppState } from '../AppState'
+import { keepService } from '../services/KeepService'
+
 export default {
   name: 'Home',
   setup() {
+    onMounted(() => {
+      try {
+        keepService.getKeeps()
+      } catch (error) {
+        Notification.toast(error, error)
+      }
+    })
     return {
       keeps: computed(() => AppState.keeps)
     }
