@@ -23,7 +23,7 @@ namespace keeper.Controllers
       try
       {
         Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
-        VaultKeep newvk = _vks.Create(vaultKeep);
+        VaultKeep newvk = _vks.Create(vaultKeep, userInfo.Id);
         newvk.CreatorId = userInfo?.Id;
         return Ok(newvk);
       }

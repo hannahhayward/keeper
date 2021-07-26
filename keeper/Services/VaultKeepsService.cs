@@ -7,13 +7,23 @@ namespace keeper.Services
   public class VaultKeepsService
   {
     private readonly VaultKeepsRepository _vkr;
-    
-    public VaultKeepsService(VaultKeepsRepository vkr)
+    private readonly VaultsRepository _vr;
+    public VaultKeepsService(VaultKeepsRepository vkr, VaultsRepository vr)
     {
       _vkr = vkr;
+      _vr = vr;
     }
-    internal VaultKeep Create(VaultKeep vk)
+
+    internal VaultKeep Create(VaultKeep vk, string userId)
     {
+      Vault vault = _vr.GetById(vk.VaultId);
+      if(vault.CreatorId == userId){
+      return _vkr.Create(vk);
+      }
+      if(vault.CreatorId != userId)
+      {
+      throw new Exception("this is not yours");
+      }
       return _vkr.Create(vk);
     }
     internal VaultKeep GetOne(int id)
