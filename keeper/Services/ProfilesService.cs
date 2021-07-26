@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using keeper.Models;
 using keeper.Repositories;
 
@@ -20,5 +21,23 @@ namespace keeper.Services
                 }
             return p;
         }
+    internal List<Keep> GetKeepsByProfileId(string id)
+    {
+      var keeps = _pr.GetKeepsByProfileId(id);
+      if(keeps == null)
+      {
+        throw new Exception("this user has no keeps");
+      }
+      return keeps;
+    }
+    internal List<Vault> GetVaultsByProfileId(string id)
+    {
+      var vaults = _pr.GetVaultsByProfileId(id);
+      if(vaults == null)
+      {
+        throw new Exception("this user has no vaults");
+      }
+      return vaults;
+    }
   }
 }

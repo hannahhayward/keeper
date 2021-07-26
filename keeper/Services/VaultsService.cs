@@ -22,6 +22,10 @@ namespace keeper.Services
       {
         throw new Exception("cannot find vault with that Id");
       }
+      if(vault.IsPrivate != false)
+      {
+        throw new Exception("this vault is private");
+      }
       return vault;
     }
     public Vault Create(Vault vault)
@@ -43,6 +47,11 @@ namespace keeper.Services
     }
     internal List<KeepsViewModel> GetKeepsByVaultId(int id)
     {
+      var vault = _vr.GetById(id);
+      if(vault.IsPrivate != false)
+      {
+        throw new Exception("this vault is private");
+      }
       var keeps = _vkr.GetKeepsByVaultId(id);
       return keeps;
     }
