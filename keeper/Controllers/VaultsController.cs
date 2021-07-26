@@ -68,11 +68,11 @@ namespace keeper.Controllers
       }
     }
     [HttpGet("{id}/keeps")]
-    public ActionResult<List<Keep>> GetKeepsByVaultId(int id)
+    public ActionResult<List<KeepsViewModel>> GetKeepsByVaultId(int id)
     {
       try
       {
-          List<Keep> keeps = _vs.GetKeepsByVaultId(id);
+          List<KeepsViewModel> keeps = _vs.GetKeepsByVaultId(id);
           return Ok(keeps);
       }
       catch (System.Exception e)

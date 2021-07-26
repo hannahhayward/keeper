@@ -33,11 +33,6 @@ namespace keeper.Services
       }
       return k;
     }
-    internal List<Vault> GetVaultsByKeepId(int id)
-    {
-      var vaults = _vkr.GetVaultsByKeepId(id);
-      return vaults;
-    }
     public Keep Update(Keep keep, string userId)
     {
       Keep original = _kr.GetById(keep.Id);

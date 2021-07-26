@@ -7,6 +7,7 @@ namespace keeper.Services
   public class VaultKeepsService
   {
     private readonly VaultKeepsRepository _vkr;
+    
     public VaultKeepsService(VaultKeepsRepository vkr)
     {
       _vkr = vkr;
@@ -19,18 +20,19 @@ namespace keeper.Services
     {
       return _vkr.getOne(id);
     }
-    internal void Delete(int id, string userId)
+    internal VaultKeep Delete(int id, string userId)
     {
-      VaultKeep vk = _vkr.getOne(id);
-      if(vk == null)
-      {
-        throw new Exception("no vaultkeep found with that Id"); 
-      }
+      VaultKeep vk = GetOne(id);
       if(vk.CreatorId != userId)
       {
         throw new Exception("nice try buddy that isn't yours");
       }
+      if(vk == null)
+      {
+        throw new Exception("cannot find vault keep with that id");
+      }
       _vkr.Delete(id);
+      return vk;
     }
 }
 }

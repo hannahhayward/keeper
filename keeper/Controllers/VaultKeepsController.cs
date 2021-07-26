@@ -22,7 +22,9 @@ namespace keeper.Controllers
     {
       try
       {
-          return Ok(_vks.Create(vaultKeep));
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        vaultKeep.CreatorId = userInfo.Id;
+        return Ok(_vks.Create(vaultKeep));
       }
       catch (System.Exception e)
       {

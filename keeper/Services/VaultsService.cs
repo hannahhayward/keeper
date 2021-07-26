@@ -41,7 +41,7 @@ namespace keeper.Services
       }
       throw new Exception("nice try buddy this isnt yours");
     }
-    internal List<Keep> GetKeepsByVaultId(int id)
+    internal List<KeepsViewModel> GetKeepsByVaultId(int id)
     {
       var keeps = _vkr.GetKeepsByVaultId(id);
       return keeps;
