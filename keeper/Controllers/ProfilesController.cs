@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using CodeWorks.Auth0Provider;
 using keeper.Models;
 using keeper.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -13,9 +15,11 @@ namespace keeper.Controllers
   public class ProfilesController : ControllerBase
   {
     private readonly ProfilesService _ps;
-    public ProfilesController(ProfilesService ps)
+    private readonly AccountService _accs;
+    public ProfilesController(ProfilesService ps, AccountService accs)
     {
       _ps = ps;
+      _accs = accs;
     }
     [HttpGet("{id}")]
     public ActionResult<Profile> GetProfile(string id)
@@ -44,30 +48,13 @@ namespace keeper.Controllers
       }
     }
     [HttpGet("{id}/vaults")]
-    public ActionResult<List<Vault>> GetVaultsByProfileId(string id)
+    public async Task<ActionResult<List<Vault>>> GetVaultsByProfileId(string id)
     {
       try
       {
-        List<Vault> vaults = _ps.GetVaultsByProfileId(id);
-        List<Vault> publicvaults = new List<Vault>();
-        foreach(var vault in vaults)
-        {
-          if(vault.IsPrivate == false)
-          {
-            publicvaults.Add(vault);
-          }
-        }
-            return publicvaults;
-        // for (int i = 0; i < vaults.Count; i++)
-        // {
-        //     if(vaults[i].IsPrivate != false)
-        //     {
-        //       vaults.Remove(vaults[i]);
-        //       return vaults;
-        //     }
-        //     return vaults;
-        // }
-        // return Ok(vaults);
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        List<Vault> vaults = _ps.GetVaultsByProfileId(id, userInfo?.Id);
+          return vaults;
       }
       catch (System.Exception e)
       {
