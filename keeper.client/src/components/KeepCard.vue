@@ -1,13 +1,20 @@
 <template>
-  <div class="col-3 card">
-    <img :src="keep.img" class="fit" :alt="keep.id">
-    <div class="card-body">
-      <p class="card-text bg-dark">
-        {{ keep.name }}
-      </p>
-      <button type="button" class="btn btn-primary" @click="getById(keep.id)" data-toggle="modal" data-target="#exampleModal">
-        Launch demo modal
-      </button>
+  <div class="col-3 my-card" @click="getById(keep.id)">
+    <img :src="keep.img" class="fit" :alt="keep.id" data-toggle="modal" data-target="#exampleModal">
+    <div class="row d-flex">
+      <div class="card-body col-9">
+        <h5 class="card-text" data-toggle="modal" data-target="#exampleModal">
+          {{ keep.name }}
+        </h5>
+      </div>
+      <div class="col-3 mt-2">
+        <div>
+          <img :src="keep.creator.picture"
+               :alt="keep.creator.id"
+               class="pic rounded-pill"
+          >
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -33,14 +40,14 @@ export default {
     })
     return {
       state,
-      getById(id) {
+      activeKeep: computed(() => AppState.activeKeep),
+      async getById(id) {
         try {
-          keepService.getById(id)
+          await keepService.getById(id)
         } catch (error) {
           logger.log('not working')
         }
-      },
-      activeKeep: computed(() => AppState.activeKeep)
+      }
     }
   }
 }
@@ -48,19 +55,30 @@ export default {
 
 <style scoped>
 .fit{
-  object-fit: cover;
-  object-position: center;
-  background-image: initial;
-  background-repeat: no-repeat;
+ object-fit: contain;
+}
+.pic{
+  height: 5vh;
 }
 
 .size{
   min-height: 20vh;
   max-height: 30vh;
 }
-.card-size{
-  width: 20vw;
-  height: 40vh;
+.my-card{
+  position: relative;
+    display: flex;
+    flex-direction: column;
+    color: aliceblue;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #010208ba;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    height: fit-content;
+    width: fit-content;
+    padding: 0%;
 }
 
 </style>

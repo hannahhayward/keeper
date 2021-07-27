@@ -5,6 +5,7 @@ import { api } from './AxiosService'
 class KeepService {
   async getKeeps(url = 'api/keeps') {
     const res = await api.get(url)
+    logger.log(res.data, 'keeps data')
     AppState.keeps = res.data
   }
 

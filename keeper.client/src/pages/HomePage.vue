@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <KeepCard v-for="k in keeps" :key="k.id" :keep="k" class="mx-1" />
+      <KeepCard v-for="k in keeps" :key="k.id" :keep="k" />
     </div>
   </div>
   <div class="modal fade"
@@ -18,6 +18,24 @@
           </div>
           <div>
             <h6>{{ activeKeep.name }}</h6>
+          </div>
+        </div>
+        <div>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+            >
+              Dropdown button
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
           </div>
         </div>
       </div>
