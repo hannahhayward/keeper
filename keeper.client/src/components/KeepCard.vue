@@ -9,10 +9,13 @@
       </div>
       <div class="col-3 mt-2">
         <div>
-          <img :src="keep.creator.picture"
-               :alt="keep.creator.id"
-               class="pic rounded-pill"
-          >
+          <router-link :to="{name: 'Profile', params:{id: keep.creator.id}}">
+            <img :src="keep.creator.picture"
+                 :alt="keep.creator.id"
+                 class="pic rounded-pill"
+                 @click="getProfile(keep.creator.id)"
+            >
+          </router-link>
         </div>
       </div>
     </div>
@@ -44,6 +47,13 @@ export default {
       async getById(id) {
         try {
           await keepService.getById(id)
+        } catch (error) {
+          logger.log('not working')
+        }
+      },
+      async getProfile(id) {
+        try {
+          await profileService.getProfile(id)
         } catch (error) {
           logger.log('not working')
         }
