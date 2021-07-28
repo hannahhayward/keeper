@@ -1,0 +1,84 @@
+<template>
+  <div class="modal fade"
+       id="keepModal"
+       tabindex="-1"
+       aria-labelledby="createKeepModal"
+       aria-hidden="true"
+       data-backdrop="static"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            New Keep
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form @submit.prevent="createKeep">
+            <label for="keepName">Name</label>
+            <input type="text"
+                   name="Name"
+                   id="newKeepName"
+                   class="form-control"
+                   placeholder="Name..."
+                   v-model="state.newKeep.name"
+            />
+            <label for="keepImg">Img</label>
+            <input type="text"
+                   name="Img"
+                   id="newKeepImg"
+                   class="form-control"
+                   placeholder="Img..."
+                   v-model="state.newKeep.img"
+            />
+            <label for="keepDescription">Description</label>
+            <input type="text"
+                   name="Description"
+                   id="newKeepDescription"
+                   class="form-control"
+                   placeholder="Description..."
+                   v-model="state.newKeep.description"
+            />
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">
+                Create
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { reactive } from '@vue/reactivity'
+import { AppState } from '../AppState'
+import { keepService } from '../services/KeepService'
+import { logger } from '../utils/Logger'
+export default {
+  setup() {
+    const state = reactive({
+      newKeep: AppState.newKeep
+    })
+    return {
+      state,
+      async createKeep() {
+        try {
+          logger.log(state.newKeep, 'before sends to service')
+          await keepService.createKeep(state.newKeep)
+        } catch (error) {
+          logger.log(error, 'could not create keep')
+        }
+      }
+    }
+  }
+}
+</script>
+
+<style>
+
+</style>

@@ -8,108 +8,29 @@
         <h3 class="text-left">
           {{ profile.name }}
         </h3>
-        <p>Vaults:</p>
-        <p>Keeps:</p>
+        <p>Vaults: {{ vaults.length }}</p>
+        <p>Keeps: {{ keeps.length }}</p>
       </div>
     </div>
     <div class="row">
       <div class="col-10 text-left">
         <h5>
-          Vaults <i class="mdi mdi-plus-thick" data-toggle="modal" data-target="#vaultModal"></i>
+          Vaults <i class="mdi mdi-plus-thick" data-toggle="modal" data-target="#vaultModal" v-if="account.id === profile.id"></i>
         </h5>
       </div>
+      <CreateVaultModal />
     </div>
     <div class="row">
       <VaultCard v-for="v in vaults" :key="v.id" :vault="v" />
     </div>
     <div class="row">
       <div class="col-10 text-left">
-        <h5>Keeps <i class="mdi mdi-plus-thick" data-toggle="modal" data-target="#keepModal"></i></h5>
+        <h5>Keeps <i class="mdi mdi-plus-thick" data-toggle="modal" data-target="#keepModal" v-if="account.id === proifle.id"></i></h5>
       </div>
+      <CreateKeepModal />
     </div>
     <div class="row">
       <KeepCard v-for="k in keeps" :key="k.id" :keep="k" />
-    </div>
-    <!-- Vault Modal -->
-    <div class="modal fade"
-         id="vaultModal"
-         tabindex="-1"
-         aria-labelledby="createVaultModal"
-         aria-hidden="true"
-         data-backdrop="static"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
-              New Vault
-            </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <label for="vaultTitle">Title</label>
-            <input type="text" name="Title" id="newVaultTitle" class="form-control" placeholder="Title..." />
-            <label for="vaultDescription">Description</label>
-            <input type="text" name="Description" id="newVaultDescription" class="form-control" placeholder="Description..." />
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-              <label class="btn btn-secondary active">
-                <input type="radio" name="options" id="option1" checked> Private
-              </label>
-              <label class="btn btn-secondary">
-                <input type="radio" name="options" id="option2"> Public
-              </label>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                Close
-              </button>
-              <button type="button" class="btn btn-primary">
-                Save changes
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Keep Modal -->
-    <div class="modal fade"
-         id="keepModal"
-         tabindex="-1"
-         aria-labelledby="createKeepModal"
-         aria-hidden="true"
-         data-backdrop="static"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
-              New Keep
-            </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <label for="keepName">Name</label>
-            <input type="text" name="Name" id="newKeepName" class="form-control" placeholder="Name..." />
-            <label for="keepImg">Img</label>
-            <input type="text" name="Img" id="newKeepImg" class="form-control" placeholder="Img..." />
-            <label for="keepDescription">Description</label>
-            <input type="text" name="Description" id="newKeepDescription" class="form-control" placeholder="Description..." />
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                Close
-              </button>
-              <button type="button" class="btn btn-primary">
-                Save changes
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Keep Modal -->
     </div>
   </div>
 </template>
@@ -121,9 +42,8 @@ import { AppState } from '../AppState'
 import { keepService } from '../services/KeepService'
 import { vaultService } from '../services/VaultService'
 import { useRoute } from 'vue-router'
-// import { profileService } from '../services/ProfileService'
 export default {
-  setup(props) {
+  setup() {
     const route = useRoute()
     onMounted(() => {
       try {
@@ -137,7 +57,8 @@ export default {
     return {
       profile: computed(() => AppState.activeProfile),
       keeps: computed(() => AppState.activeProfileKeeps),
-      vaults: computed(() => AppState.activeProfileVaults)
+      vaults: computed(() => AppState.activeProfileVaults),
+      account: computed(() => AppState.account)
     }
   }
 

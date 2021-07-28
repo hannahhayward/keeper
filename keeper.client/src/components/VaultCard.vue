@@ -1,15 +1,17 @@
 <template>
   <div class="col-3 my-card" @click="getById(vault.id)">
-    <div class="row d-flex">
-      <div class="card-body col-9">
-        <h5 class="card-text" data-toggle="modal" data-target="#exampleModal">
-          {{ vault.name }}
-        </h5>
-        <p>
-          {{ vault.description }}
-        </p>
+    <router-link :to="{name: 'Vault', params:{id: vault.id}}" v-if="vault.isPrivate == false">
+      <div class="row d-flex">
+        <div class="card-body col-9">
+          <h5 class="card-text" data-toggle="modal" data-target="#exampleModal">
+            {{ vault.name }}
+          </h5>
+          <p>
+            {{ vault.description }}
+          </p>
+        </div>
       </div>
-    </div>
+    </router-link>
   </div>
 </template>
 <script>

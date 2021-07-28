@@ -1,6 +1,6 @@
 <template>
   <div class="col-3 my-card" @click="getById(keep.id)">
-    <img :src="keep.img" class="fit" :alt="keep.id" data-toggle="modal" data-target="#exampleModal">
+    <img :src="keep.img" class="fit" :alt="keep.id" data-toggle="modal" data-target="#keepModal">
     <div class="row d-flex">
       <div class="card-body col-9">
         <h5 class="card-text" data-toggle="modal" data-target="#exampleModal">
@@ -13,16 +13,15 @@
             <img :src="keep.creator.picture"
                  :alt="keep.creator.id"
                  class="pic rounded-pill"
-                 @click="getProfile(keep.creator.id)"
             >
           </router-link>
         </div>
       </div>
     </div>
   </div>
+  <KeepModal />
 </template>
 <script>
-import { reactive } from '@vue/reactivity'
 import { profileService } from '../services/ProfileService'
 import { keepService } from '../services/KeepService'
 import { logger } from '../utils/Logger'
@@ -32,17 +31,7 @@ import { computed } from '@vue/runtime-core'
 export default {
   props: { keep: { type: Object, required: true } },
   setup(props) {
-    const state = reactive({
-      getProfile(id) {
-        try {
-          profileService.getProfile(id)
-        } catch (error) {
-          Notification.toast(error, error)
-        }
-      }
-    })
     return {
-      state,
       activeKeep: computed(() => AppState.activeKeep),
       async getById(id) {
         try {

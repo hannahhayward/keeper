@@ -18,5 +18,15 @@ class KeepService {
     const res = await api.get(`api/profiles/${id}/keeps`)
     AppState.activeProfileKeeps = res.data
   }
+
+  async getKeepsByVaultId(id) {
+    const res = await api.get(`api/vaults/${id}/keeps`)
+    AppState.activeVaultKeeps = res.data
+  }
+
+  async createKeep(newKeep) {
+    const res = await api.post('api/keeps/', newKeep)
+    AppState.keeps = res.data
+  }
 }
 export const keepService = new KeepService()
