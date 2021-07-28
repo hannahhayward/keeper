@@ -10,15 +10,20 @@
 import { computed, onMounted } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import { keepService } from '../services/KeepService'
+import { vaultService } from '../services/VaultService'
+import { logger } from '../utils/Logger'
 
 export default {
   name: 'Home',
   setup() {
+    const state =
+    ({ profile: computed(() => AppState.account) })
     onMounted(() => {
       try {
+        vaultService.getVaultsByProfileId(state.profile.id)
         keepService.getKeeps()
       } catch (error) {
-        Notification.toast(error, error)
+        logger.log(error, 'one of the onmounteds did not work bruh')
       }
     })
     return {

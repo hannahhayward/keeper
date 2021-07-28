@@ -19,7 +19,7 @@
           <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle"
                     type="button"
-                    id="dropdownMenuButton"
+                    id="vaultDropdownMenu"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
@@ -27,9 +27,9 @@
               Dropdown button
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
+              <div class="dropdown-item" v-for="v in vaults" :key="v.id" href="#">
+                {{ vault.name }}
+              </div>
             </div>
           </div>
         </div>
@@ -39,11 +39,18 @@
 </template>
 
 <script>
-import { computed } from '@vue/runtime-core'
+import { computed, reactive } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 export default {
   setup() {
-    return { activeKeep: computed(() => AppState.activeKeep) }
+    const state = reactive({
+      profile: AppState.account
+    })
+    return {
+      state,
+      activeKeep: computed(() => AppState.activeKeep),
+      vaults: computed(() => AppState.activeProfileVaults)
+    }
   }
 }
 </script>
