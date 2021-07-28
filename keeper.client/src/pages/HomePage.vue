@@ -1,7 +1,9 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid d-flex">
     <div class="row">
-      <KeepCard v-for="k in keeps" :key="k.id" :keep="k" />
+      <div class="card-columns ">
+        <KeepCard v-for="k in keeps" :key="k.id" :keep="k" />
+      </div>
     </div>
   </div>
 </template>
@@ -16,19 +18,22 @@ import { logger } from '../utils/Logger'
 export default {
   name: 'Home',
   setup() {
+    const userId = AppState.account.id
     const state =
     ({ profile: computed(() => AppState.account) })
-    onMounted(() => {
+    onMounted(async() => {
       try {
-        vaultService.getVaultsByProfileId(state.profile.id)
-        keepService.getKeeps()
+        await vaultService.getUserVaults(userId)
+        await keepService.getKeeps()
       } catch (error) {
         logger.log(error, 'one of the onmounteds did not work bruh')
       }
     })
     return {
+      state,
       keeps: computed(() => AppState.keeps),
-      activeKeep: computed(() => AppState.activeKeep)
+      activeKeep: computed(() => AppState.activeKeep),
+      vaults: computed(() => AppState.userVaults)
     }
   }
 }

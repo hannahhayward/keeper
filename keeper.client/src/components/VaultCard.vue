@@ -1,5 +1,5 @@
 <template>
-  <div class="col-3 my-card" @click="getById(vault.id)">
+  <div class="card" @click="getById(vault.id)">
     <router-link :to="{name: 'Vault', params:{id: vault.id}}" v-if="vault.isPrivate == false">
       <div class="row d-flex">
         <div class="card-body col-9">

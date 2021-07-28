@@ -21,7 +21,9 @@
       <CreateVaultModal />
     </div>
     <div class="row">
-      <VaultCard v-for="v in vaults" :key="v.id" :vault="v" />
+      <div class="card-columns">
+        <VaultCard v-for="v in vaults" :key="v.id" :vault="v" />
+      </div>
     </div>
     <div class="row">
       <div class="col-10 text-left">
@@ -30,7 +32,9 @@
       <CreateKeepModal />
     </div>
     <div class="row">
-      <KeepCard v-for="k in keeps" :key="k.id" :keep="k" />
+      <div class="card-columns">
+        <ProfileKeepCard v-for="k in keeps" :key="k.id" :keep="k" />
+      </div>
     </div>
   </div>
 </template>

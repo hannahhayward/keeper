@@ -1,29 +1,23 @@
 <template>
-  <div class="">
-    <div class="card">
-      <img class="card-img-top"
-           :src="keep.img"
-           data-toggle="modal"
-           data-target="#keepModal"
-           alt="Card image cap"
-
-           @click="getById(keep.id)"
-      >
-      <h5 class="card-title">
-        {{ keep.name }}
-      </h5>
-      <router-link :to="{name: 'Profile', params:{id: keep.creator.id}}">
-        <p class="card-text align-text-bottom">
-          {{ keep.creator.name }}
-          <img :src="keep.creator.picture"
-               :alt="keep.creator.id"
-               class="pic rounded-pill"
-          />
-        </p>
-      </router-link>
+  <div class="card" data-toggle="modal" data-target="#exampleModal" @click="getById(keep.id)">
+    <div class="card-container">
+      <img class="card-img-top" :src="keep.img" alt="Card image cap">
+      <div class="card-img-overlay">
+        <h5 class="card-title">
+          {{ keep.name }}
+        </h5>
+        <router-link :to="{name: 'Profile', params:{id: keep.creator.id}}">
+          <p class="card-text">
+            {{ keep.creator.name }}
+            <img :src="keep.creator.picture"
+                 :alt="keep.creator.id"
+                 class="pic rounded-pill"
+            />
+          </p>
+        </router-link>
+      </div>
     </div>
   </div>
-  <KeepModal />
 </template>
 <script>
 import { profileService } from '../services/ProfileService'
