@@ -7,12 +7,12 @@
            data-target="#keepModal"
            alt="Card image cap"
 
-           @click="getById(keep.id)"
+           @click="getById(keep.id),getProfile(keep.creatorId)"
       >
       <h5 class="card-title">
         {{ keep.name }}
       </h5>
-      <router-link :to="{name: 'Profile', params:{id: keep.creator.id}}">
+      <router-link :to="{name: 'Profile', params:{id: activeKeep.id}}">
         <p class="card-text align-text-bottom">
           {{ keep.creator.name }}
           <img :src="keep.creator.picture"

@@ -1,4 +1,5 @@
 import { AppState } from '../AppState'
+import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
 
 class KeepService {
@@ -26,6 +27,13 @@ class KeepService {
   async createKeep(newKeep) {
     const res = await api.post('api/keeps/', newKeep)
     AppState.keeps = res.data
+  }
+
+  async updateKeep(newKeep) {
+    const id = newKeep.id
+    const res = await api.put(`api/keeps/${id}`, newKeep)
+    logger.log(newKeep, 'view count go up?')
+    AppState.activeKeep = res.data
   }
 }
 export const keepService = new KeepService()

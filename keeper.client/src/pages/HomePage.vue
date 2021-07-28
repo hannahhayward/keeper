@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { computed, onMounted } from '@vue/runtime-core'
+import { computed, watchEffect } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import { keepService } from '../services/KeepService'
 import { vaultService } from '../services/VaultService'
@@ -21,7 +21,7 @@ export default {
     const userId = AppState.account.id
     const state =
     ({ profile: computed(() => AppState.account) })
-    onMounted(async() => {
+    watchEffect(async() => {
       try {
         await vaultService.getUserVaults(userId)
         await keepService.getKeeps()
