@@ -12,7 +12,7 @@
       <h5 class="card-title">
         {{ keep.name }}
       </h5>
-      <router-link :to="{name: 'Profile', params:{id: activeKeep.id}}">
+      <router-link :to="{name: 'Profile', params:{id: keep.creator.id }}">
         <p class="card-text align-text-bottom">
           {{ keep.creator.name }}
           <img :src="keep.creator.picture"
@@ -37,6 +37,7 @@ export default {
   setup(props) {
     return {
       activeKeep: computed(() => AppState.activeKeep),
+      activeProfile: computed(() => AppState.activeProfile),
       async getById(id) {
         try {
           await keepService.getById(id)

@@ -15,7 +15,7 @@
     <div class="row">
       <div class="col-10 text-left">
         <h5>
-          Vaults <i class="mdi mdi-plus-thick" data-toggle="modal" data-target="#vaultModal" v-if="state.account.id === profile.id"></i>
+          Vaults <i class="mdi mdi-plus-thick" data-toggle="modal" data-target="#vaultModal" v-if="account.id === profile.id"></i>
         </h5>
       </div>
       <CreateVaultModal />
@@ -27,7 +27,7 @@
     </div>
     <div class="row">
       <div class="col-10 text-left">
-        <h5>Keeps <i class="mdi mdi-plus-thick" data-toggle="modal" data-target="#keepModal" v-if="state.account.id === profile.id"></i></h5>
+        <h5>Keeps <i class="mdi mdi-plus-thick" data-toggle="modal" data-target="#createKeepModal" v-if="account.id === profile.id"></i></h5>
       </div>
       <CreateKeepModal />
     </div>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { computed, onMounted, reactive } from '@vue/runtime-core'
+import { computed, onMounted, watchEffect } from '@vue/runtime-core'
 import { logger } from '../utils/Logger'
 import { AppState } from '../AppState'
 import { keepService } from '../services/KeepService'
@@ -50,21 +50,18 @@ import { profileService } from '../services/ProfileService'
 export default {
   setup() {
     const route = useRoute()
-    const state = reactive({
-      account: AppState.account
-    })
-    onMounted(() => {
+    onMounted(async() => {
       try {
-        vaultService.getVaultsByProfileId(route.params.id)
         keepService.getKeepsByProfileId(route.params.id)
         profileService.getProfile(route.params.id)
+        vaultService.getVaultsByProfileId(route.params.id)
       } catch (error) {
         logger.log('didnt get anything')
       }
     })
     return {
-      state,
       profile: computed(() => AppState.activeProfile),
+      account: computed(() => AppState.account),
       keeps: computed(() => AppState.activeProfileKeeps),
       vaults: computed(() => AppState.activeProfileVaults)
     }

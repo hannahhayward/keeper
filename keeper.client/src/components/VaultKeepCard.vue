@@ -1,25 +1,27 @@
 <template>
-  <div class="card"
-       data-toggle="modal"
-       data-target="#keepModal"
-       @click="getById(keep.id)"
-  >
-    <div class="card-container">
-      <img class="card-img-top" :src="keep.img" alt="Card image cap">
-      <div class="card-img-overlay">
-        <h5 class="card-title">
-          {{ keep.name }}
-        </h5>
-        <router-link :to="{name: 'Profile', params:{id: keep.creator.id}}">
-          <p class="card-text">
-            {{ keep.creator.name }}
-            <img :src="keep.creator.picture"
-                 :alt="keep.creator.id"
-                 class="pic rounded-pill"
-            />
-          </p>
-        </router-link>
-      </div>
+  <div class="">
+    <div class="card">
+      <img class="card-img-top"
+           :src="keep.img"
+           data-toggle="modal"
+           data-target="#keepModal"
+           alt="Card image cap"
+
+           @click="getById(keep.id),getProfile(keep.creatorId)"
+      >
+      <h5 class="card-title">
+        {{ keep.name }}
+      </h5>
+      <i v-if="vault.creatorId === account.id" class="mdi mdi-delete-outline" @click="deleteVaultKeep(keep.id)"></i>
+      <router-link :to="{name: 'Profile', params:{id: keep.creator.id }}">
+        <p class="card-text align-text-bottom">
+          {{ keep.creator.name }}
+          <img :src="keep.creator.picture"
+               :alt="keep.creator.id"
+               class="pic rounded-pill"
+          />
+        </p>
+      </router-link>
     </div>
   </div>
   <KeepModal />
@@ -30,12 +32,23 @@ import { keepService } from '../services/KeepService'
 import { logger } from '../utils/Logger'
 import { AppState } from '../AppState'
 import { computed } from '@vue/runtime-core'
+import { vaultService } from '../services/VaultService'
 
 export default {
   props: { keep: { type: Object, required: true } },
   setup(props) {
     return {
       activeKeep: computed(() => AppState.activeKeep),
+      activeProfile: computed(() => AppState.activeProfile),
+      vault: computed(() => AppState.activeVault),
+      account: computed(() => AppState.account),
+      async deleteVaultKeep(keepId) {
+        try {
+          vaultService.deleteVaultKeep(keepId)
+        } catch (error) {
+          logger.log(error, 'couldnt delete vault keep')
+        }
+      },
       async getById(id) {
         try {
           await keepService.getById(id)

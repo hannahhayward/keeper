@@ -22,6 +22,7 @@ class KeepService {
     const res = await api.get(`api/vaults/${id}/keeps`)
     AppState.activeProfileKeeps = []
     AppState.activeVaultKeeps = res.data
+    logger.log(res.data, 'keeps')
   }
 
   async createKeep(newKeep) {
@@ -34,6 +35,11 @@ class KeepService {
     const res = await api.put(`api/keeps/${id}`, newKeep)
     logger.log(newKeep, 'view count go up?')
     AppState.activeKeep = res.data
+  }
+
+  async deleteKeep(id) {
+    const res = await api.delete('api/keeps/' + id)
+    logger.log(res.data)
   }
 }
 export const keepService = new KeepService()

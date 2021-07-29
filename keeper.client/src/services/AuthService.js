@@ -1,9 +1,11 @@
 import { initialize } from '@bcwdev/auth0provider-client'
+import { computed } from 'vue'
 import { AppState } from '../AppState'
 import { audience, clientId, domain } from '../env'
 import { router } from '../router'
 import { accountService } from './AccountService'
 import { api } from './AxiosService'
+import { profileService } from './ProfileService'
 import { vaultService } from './VaultService'
 // import { socketService } from './SocketService'
 

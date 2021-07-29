@@ -11,7 +11,6 @@ class VaultService {
 
   async getUserVaults(id) {
     const res = await api.get(`api/profiles/${id}/vaults`)
-    logger.log(res.data, 'user vaults in the serv')
     AppState.userVaults = res.data
   }
 
@@ -21,14 +20,22 @@ class VaultService {
   }
 
   async createVault(newVault) {
-    logger.log(newVault, 'new vault in the service')
     const res = await api.post('api/vaults/', newVault)
-    AppState.activeProfileVaults = res.data
+    AppState.activeProfileVaults = [res.data, ...AppState.activeProfileVaults]
   }
 
   async createVaultKeep(newVk) {
     const res = await api.post('api/vaultkeeps/', newVk)
-    logger.log(res.data, 'that new vault keep')
+    AppState.userVaults = res.data
+  }
+
+  async deleteVault(id) {
+    await api.delete('api/vaults/' + id)
+    AppState.activeProfileVaults = AppState.activeProfileVaults.filter(v => v.id !== id)
+  }
+
+  async deleteVaultKeep(keepId) {
+    AppState.activeVaultKeeps = AppState.activeVaultKeeps.filter(k => k.id !== keepId)
   }
 }
 export const vaultService = new VaultService()

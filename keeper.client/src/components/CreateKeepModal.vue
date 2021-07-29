@@ -1,6 +1,6 @@
 <template>
   <div class="modal fade"
-       id="keepModal"
+       id="createKeepModal"
        tabindex="-1"
        aria-labelledby="createKeepModal"
        aria-hidden="true"
