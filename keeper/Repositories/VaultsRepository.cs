@@ -19,11 +19,11 @@ namespace keeper.Repositories
     v.*,
     a.*
     FROM vaults v
-    JOIN accounts a ON v.creatorId = a.id
+    JOIN accounts a ON a.id = v.creatorId
     WHERE v.id = @id;";
-    return _db.Query<Vault, Account, Vault>(sql, (v,a)=>
+    return _db.Query<Vault, Profile, Vault>(sql, (v,p)=>
     {
-      v.Creator = a;
+      v.Creator = p;
       return v;
     }, new { id }).FirstOrDefault();
   }

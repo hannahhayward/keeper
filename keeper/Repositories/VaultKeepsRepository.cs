@@ -46,7 +46,8 @@ namespace keeper.Repositories
       string sql = @"
       INSERT INTO
         vaultkeeps(creatorId, vaultId, keepId)
-      VALUES(@CreatorId, @VaultId, @KeepId);";
+      VALUES(@CreatorId, @VaultId, @KeepId);
+      SELECT LAST_INSERT_ID();";
       vk.Id = _db.ExecuteScalar<int>(sql, vk);
       return vk;
     }
