@@ -13,7 +13,7 @@
         {{ keep.name }}
       </h5>
       <i v-if="vault.creatorId === account.id" class="mdi mdi-delete-outline" @click="deleteVaultKeep(keep.id)"></i>
-      <router-link :to="{name: 'Profile', params:{id: keep.creator.id }}">
+      <router-link class="link" :to="{name: 'Profile', params:{id: keep.creator.id }}">
         <p class="card-text align-text-bottom">
           {{ keep.creator.name }}
           <img :src="keep.creator.picture"
@@ -29,10 +29,10 @@
 <script>
 import { profileService } from '../services/ProfileService'
 import { keepService } from '../services/KeepService'
-import { logger } from '../utils/Logger'
 import { AppState } from '../AppState'
 import { computed } from '@vue/runtime-core'
 import { vaultService } from '../services/VaultService'
+import Pop from '../utils/Notifier'
 
 export default {
   props: { keep: { type: Object, required: true } },
@@ -46,21 +46,21 @@ export default {
         try {
           vaultService.deleteVaultKeep(keepId)
         } catch (error) {
-          logger.log(error, 'couldnt delete vault keep')
+          Pop.toast(error, 'couldnt delete vault keep')
         }
       },
       async getById(id) {
         try {
           await keepService.getById(id)
         } catch (error) {
-          logger.log('not working')
+          Pop.toast('not working')
         }
       },
       async getProfile(id) {
         try {
           await profileService.getProfile(id)
         } catch (error) {
-          logger.log('not working')
+          Pop.toast('not working')
         }
       }
     }

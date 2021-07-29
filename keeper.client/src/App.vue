@@ -7,7 +7,7 @@
   </main>
   <footer>
     <div class="bg-dark text-light text-center p-4">
-      my logo hehe
+      <p>brought to you by h<sup>2</sup></p>
     </div>
   </footer>
 </template>

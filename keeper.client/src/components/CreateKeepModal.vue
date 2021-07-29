@@ -7,12 +7,12 @@
        data-backdrop="static"
   >
     <div class="modal-dialog">
-      <div class="modal-content">
+      <div class="modal-content bg-dark">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">
             New Keep
           </h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -58,7 +58,7 @@
 import { reactive } from '@vue/reactivity'
 import { AppState } from '../AppState'
 import { keepService } from '../services/KeepService'
-import { logger } from '../utils/Logger'
+import Pop from '../utils/Notifier'
 export default {
   setup() {
     const state = reactive({
@@ -68,10 +68,9 @@ export default {
       state,
       async createKeep() {
         try {
-          logger.log(state.newKeep, 'before sends to service')
           await keepService.createKeep(state.newKeep)
         } catch (error) {
-          logger.log(error, 'could not create keep')
+          Pop.toast(error, 'could not create keep')
         }
       }
     }

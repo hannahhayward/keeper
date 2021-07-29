@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid d-flex">
+  <div class="container-fluid d-flex bg-color text-light">
     <div class="row">
       <div class="card-columns ">
         <KeepCard v-for="k in keeps" :key="k.id" :keep="k" />
@@ -13,7 +13,7 @@ import { computed, watchEffect } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import { keepService } from '../services/KeepService'
 import { vaultService } from '../services/VaultService'
-import { logger } from '../utils/Logger'
+import Pop from '../utils/Notifier'
 
 export default {
   name: 'Home',
@@ -26,7 +26,7 @@ export default {
         await vaultService.getUserVaults(userId)
         await keepService.getKeeps()
       } catch (error) {
-        logger.log(error, 'one of the onmounteds did not work bruh')
+        Pop.toast(error, 'one of the onmounteds did not work bruh')
       }
     })
     return {

@@ -1,5 +1,5 @@
 <template>
-  <div class="modal fade"
+  <div class="modal fade "
        id="keepModal"
        tabindex="-1"
        aria-labelledby="exampleModalLabel"
@@ -7,12 +7,12 @@
   >
     <div class="modal-dialog">
       <div class="modal-size">
-        <!-- <div class="modal-header">
-          <p class="text-right">
-            <i class="mdi mdi-close " @click="updateKeep(activeKeep)" data-dismiss="modal"></i>
-          </p>
-        </div> -->
-        <div class="modal-body h-100">
+        <div class="header bg-dark height">
+          <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body h-100 bg-dark">
           <div class="row text-right">
             <img class="modal-img h-50 w-50 col-6" :src="activeKeep.img" alt="">
             <div class="col-6 text-center">
@@ -52,19 +52,21 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-3" v-if="account.id === activeKeep.creatorId">
-              <i class="mdi mdi-delete-outline" @click="deleteKeep(activeKeep.id)"></i>
-            </div>
-            <div class="col-3">
-              <i class="mdi mdi-close " @click="updateKeep(activeKeep)" data-dismiss="modal"></i>
-            </div>
-            <div class="col-3 d-flex ">
-              <p class="align">
-                {{ creator.name }}
-              </p>
-            </div>
-            <div class="col-3 d-flex justify-content-end">
-              <img :src="creator.picture" alt="" class="rounded-pill ">
+            <div class="col-6"></div>
+            <div class="col-6 text-right d-flex ">
+              <div class="align">
+                <router-link class="link" style="text-decoration: none; color: inherit" :to="{name: 'Profile', params:{id: activeProfile.id }}">
+                  {{ creator.name }}
+                </router-link>
+                <div v-if="account.id === activeKeep.creatorId" class="text-center">
+                  <i class="mdi mdi-delete-outline" @click="deleteKeep(activeKeep.id)"></i>
+                </div>
+              </div>
+              <div class="pl-2">
+                <router-link class="link" :to="{name: 'Profile', params:{id: activeProfile.id }}">
+                  <img :src="creator.picture" alt="" class="rounded-pill">
+                </router-link>
+              </div>
             </div>
           </div>
         </div>
@@ -78,9 +80,9 @@
 <script>
 import { computed, reactive } from '@vue/runtime-core'
 import { AppState } from '../AppState'
-import { logger } from '../utils/Logger'
 import { vaultService } from '../services/VaultService'
 import { keepService } from '../services/KeepService'
+import Pop from '../utils/Notifier'
 export default {
   setup() {
     const state = reactive({
@@ -93,9 +95,9 @@ export default {
       vaults: computed(() => AppState.userVaults),
       account: computed(() => AppState.account),
       creator: computed(() => AppState.activeProfile),
+      activeProfile: computed(() => AppState.activeProfile),
       async addKeep(body) {
         try {
-          // debugger
           AppState.newVaultKeep.vaultId = body
           AppState.newVaultKeep.creatorId = AppState.activeKeep.creatorId
           AppState.newVaultKeep.keepId = AppState.activeKeep.id
@@ -103,14 +105,14 @@ export default {
           AppState.activeKeep.keeps += 1
           keepService.updateKeep(AppState.activeKeep)
         } catch (error) {
-          logger.log(error, 'couldnt add to your vault')
+          Pop.toast(error, 'couldnt add to your vault')
         }
       },
       async deleteKeep(id) {
         try {
           keepService.deleteKeep(id)
         } catch (error) {
-          logger.log(error, 'could not delete')
+          Pop.toast(error, 'could not delete')
         }
       },
       async updateKeep(keep) {
@@ -118,7 +120,7 @@ export default {
           keep.views += 1
           keepService.updateKeep(keep)
         } catch (error) {
-          logger.log(error, 'nah')
+          Pop.toast(error, 'nah')
         }
       }
     }
@@ -145,11 +147,23 @@ export default {
 }
 .rounded-pill{
     border-radius: 171rem !important;
-    height: 3rem;
+    height: 2rem;
 }
 .modal-img{
   object-fit: contain;
   object-position: center;
   width: -webkit-fill-available;}
+.header{
+display: flex;
+    justify-content: flex-end;
+    padding-right: 1rem;
+
+  }
+  .link{
+  text-decoration: none;
+  color: #F0ECEE;
+    -webkit-text-stroke: #0d0263;
+    -webkit-text-stroke-width: .05px;
+}
 
 </style>

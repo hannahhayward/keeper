@@ -78,9 +78,9 @@
 <script>
 import { computed, reactive } from '@vue/runtime-core'
 import { AppState } from '../AppState'
-import { logger } from '../utils/Logger'
 import { vaultService } from '../services/VaultService'
 import { keepService } from '../services/KeepService'
+import Pop from '../utils/Notifier'
 export default {
   setup() {
     const state = reactive({
@@ -103,14 +103,14 @@ export default {
           AppState.activeKeep.keeps += 1
           keepService.updateKeep(AppState.activeKeep)
         } catch (error) {
-          logger.log(error, 'couldnt add to your vault')
+          Pop.toast(error, 'couldnt add to your vault')
         }
       },
       async deleteKeep(id) {
         try {
           keepService.deleteKeep(id)
         } catch (error) {
-          logger.log(error, 'could not delete')
+          Pop.toast(error, 'could not delete')
         }
       },
       async updateKeep(keep) {
@@ -118,7 +118,7 @@ export default {
           keep.views += 1
           keepService.updateKeep(keep)
         } catch (error) {
-          logger.log(error, 'nah')
+          Pop.toast(error, 'nah')
         }
       }
     }

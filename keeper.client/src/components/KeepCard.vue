@@ -1,26 +1,30 @@
 <template>
   <div class="">
-    <div class="card">
+    <div class="card"
+         data-toggle="modal"
+         data-target="#keepModal"
+         @click="getById(keep.id),getProfile(keep.creatorId)"
+    >
       <img class="card-img-top"
            :src="keep.img"
-           data-toggle="modal"
-           data-target="#keepModal"
            alt="Card image cap"
-
-           @click="getById(keep.id),getProfile(keep.creatorId)"
       >
-      <h5 class="card-title">
-        {{ keep.name }}
-      </h5>
-      <router-link :to="{name: 'Profile', params:{id: keep.creator.id }}">
-        <p class="card-text align-text-bottom">
-          {{ keep.creator.name }}
-          <img :src="keep.creator.picture"
-               :alt="keep.creator.id"
-               class="pic rounded-pill"
-          />
-        </p>
-      </router-link>
+      <div class="card-img-overlay">
+        <div class="card-body height"></div>
+        <router-link class="link" :to="{name: 'Profile', params:{id: keep.creator.id }}">
+          <div class="card-text d-flex ">
+            <div class="col-9 text-center">
+              <h5> {{ keep.name }}</h5>
+            </div>
+            <div class="col-2">
+              <img :src="keep.creator.picture"
+                   :alt="keep.creator.id"
+                   class="pic rounded-pill"
+              />
+            </div>
+          </div>
+        </router-link>
+      </div>
     </div>
   </div>
   <KeepModal />
@@ -28,9 +32,9 @@
 <script>
 import { profileService } from '../services/ProfileService'
 import { keepService } from '../services/KeepService'
-import { logger } from '../utils/Logger'
 import { AppState } from '../AppState'
 import { computed } from '@vue/runtime-core'
+import Pop from '../utils/Notifier'
 
 export default {
   props: { keep: { type: Object, required: true } },
@@ -42,14 +46,14 @@ export default {
         try {
           await keepService.getById(id)
         } catch (error) {
-          logger.log('not working')
+          Pop.toast(error, 'not working')
         }
       },
       async getProfile(id) {
         try {
           await profileService.getProfile(id)
         } catch (error) {
-          logger.log('not working')
+          Pop.toast(error, 'not working')
         }
       }
     }
@@ -58,31 +62,20 @@ export default {
 </script>
 
 <style scoped>
-.fit{
- object-fit: contain;
-}
 .pic{
   height: 5vh;
 }
+.height{
 
-.size{
-  min-height: 20vh;
-  max-height: 30vh;
+      height: 97%;
+    margin-bottom: -2rem;
+
 }
-.my-card{
-  position: relative;
-    display: flex;
-    flex-direction: column;
-    color: aliceblue;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #010208ba;
-    background-clip: border-box;
-    border: 1px solid rgba(0, 0, 0, 0.125);
-    border-radius: 0.25rem;
-    height: fit-content;
-    width: fit-content;
-    padding: 0%;
+.link{
+  text-decoration: none;
+  color: #F0ECEE;
+    -webkit-text-stroke: #0d0263;
+    -webkit-text-stroke-width: medium;
 }
 
 </style>
