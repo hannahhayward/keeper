@@ -69,14 +69,21 @@ export default {
 .link{
   text-decoration: none;
   color: #F0ECEE;
-    -webkit-text-stroke: #0d0263;
-    -webkit-text-stroke-width: medium;
+    -webkit-text-stroke: #535353;
+    -webkit-text-stroke-width: thin;
 }
 .height{
-
       height: 97%;
     margin-bottom: -2rem;
-
 }
+.card-img-overlay
+    {position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1.25rem;
+    border-radius: calc(0.25rem - 1px);
+    background-image: linear-gradient(#ff000000, #21211f);}
 
 </style>

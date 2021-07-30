@@ -48,7 +48,7 @@ export default {
 .link{
   text-decoration: none;
   color: #F0ECEE;
-    -webkit-text-stroke: #0d0263;
-    -webkit-text-stroke-width: medium;
+    -webkit-text-stroke: #535353;
+    -webkit-text-stroke-width: thin;
 }
 </style>

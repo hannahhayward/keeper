@@ -1,4 +1,5 @@
 import { AppState } from '../AppState'
+import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
 
 class VaultService {
@@ -12,7 +13,8 @@ class VaultService {
       return 'you are not logged in'
     }
     const res = await api.get(`api/profiles/${id}/vaults`)
-    AppState.userVaults = res.data
+    logger.log(res.data)
+    AppState.activeProfileVaults = res.data
   }
 
   async getById(id) {

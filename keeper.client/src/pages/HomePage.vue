@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid d-flex bg-color text-light">
     <div class="row">
-      <div class="card-columns ">
+      <div class="card-columns py-3 px-2 ">
         <KeepCard v-for="k in keeps" :key="k.id" :keep="k" />
       </div>
     </div>
@@ -38,7 +38,7 @@ export default {
       state,
       keeps: computed(() => AppState.keeps),
       activeKeep: computed(() => AppState.activeKeep),
-      vaults: computed(() => AppState.userVaults)
+      vaults: computed(() => AppState.activeProfileVaults)
     }
   }
 }

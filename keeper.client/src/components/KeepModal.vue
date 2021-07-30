@@ -38,10 +38,11 @@
                           data-toggle="dropdown"
                           aria-haspopup="true"
                           aria-expanded="false"
+                          @click="getVaults(account.id)"
                   >
                     Add to a vault
                   </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton">
                     <div class="dropdown-option" v-for="v in vaults" :key="v.id" href="#" @click="addKeep(v.id)">
                       {{ v.name }}
                       <div class="dropdown-divider"></div>
@@ -56,7 +57,7 @@
             <div class="col-6 text-right d-flex ">
               <div class="align">
                 <router-link class="link" style="text-decoration: none; color: inherit" :to="{name: 'Profile', params:{id: creator.id }}" data-dismiss="modal">
-                  {{ creator.name }}
+                  <p>{{ creator.name }}</p>
                 </router-link>
                 <div v-if="account.id === activeKeep.creatorId" class="text-center">
                   <i class="mdi mdi-delete-outline" @click="deleteKeep(activeKeep.id)"></i>
@@ -92,15 +93,23 @@ export default {
     return {
       state,
       activeKeep: computed(() => AppState.activeKeep),
-      vaults: computed(() => AppState.userVaults),
+      vaults: computed(() => AppState.activeProfileVaults),
       account: computed(() => AppState.account),
       creator: computed(() => AppState.activeProfile),
+      async getVaults(id) {
+        try {
+          await vaultService.getVaultsByProfileId(id)
+        } catch (error) {
+          window.alert(error)
+        }
+      },
       async addKeep(body) {
         try {
           AppState.newVaultKeep.vaultId = body
           AppState.newVaultKeep.creatorId = AppState.activeKeep.creatorId
           AppState.newVaultKeep.keepId = AppState.activeKeep.id
           vaultService.createVaultKeep(AppState.newVaultKeep)
+          window.alert('keep has been added to your vault!')
         } catch (error) {
           window.alert(error)
         }
@@ -160,11 +169,11 @@ display: flex;
     padding-right: 1rem;
 
   }
-  .link{
+.link{
   text-decoration: none;
   color: #F0ECEE;
-    -webkit-text-stroke: #0d0263;
-    -webkit-text-stroke-width: .05px;
+    -webkit-text-stroke: #535353;
+    -webkit-text-stroke-width: thin;
 }
 
 </style>

@@ -95,13 +95,13 @@ export default {
       creator: computed(() => AppState.activeProfile),
       async addKeep(body) {
         try {
-          // debugger
           AppState.newVaultKeep.vaultId = body
           AppState.newVaultKeep.creatorId = AppState.activeKeep.creatorId
           AppState.newVaultKeep.keepId = AppState.activeKeep.id
           vaultService.createVaultKeep(AppState.newVaultKeep)
           AppState.activeKeep.keeps += 1
           keepService.updateKeep(AppState.activeKeep)
+          window.alert('keep has been added to your vault!')
         } catch (error) {
           window.alert(error)
         }

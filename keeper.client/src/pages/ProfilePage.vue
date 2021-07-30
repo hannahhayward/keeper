@@ -56,9 +56,9 @@ export default {
     const route = useRoute()
     onMounted(async() => {
       try {
-        keepService.getKeepsByProfileId(route.params.id)
-        profileService.getProfile(route.params.id)
-        vaultService.getVaultsByProfileId(route.params.id)
+        await keepService.getKeepsByProfileId(route.params.id)
+        await profileService.getProfile(route.params.id)
+        await vaultService.getVaultsByProfileId(route.params.id)
       } catch (error) {
         window.alert(error)
       }
