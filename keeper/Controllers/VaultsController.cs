@@ -59,7 +59,7 @@ namespace keeper.Controllers
           Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
           vault.Id = id;
           vault.CreatorId = userInfo?.Id;
-          Vault newVault = _vs.Update(vault, userInfo.Id, id);
+          Vault newVault = _vs.Update(vault, userInfo?.Id, id);
           newVault.Creator = userInfo;
           return Ok(newVault);
       }
@@ -69,11 +69,12 @@ namespace keeper.Controllers
       }
     }
     [HttpGet("{id}/keeps")]
-    public ActionResult<List<KeepsViewModel>> GetKeepsByVaultId(int id)
+    public async Task<ActionResult<KeepsViewModel>> GetKeepsByVaultId(int id)
     {
       try
       {
-          List<KeepsViewModel> keeps = _vs.GetKeepsByVaultId(id);
+          Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+          List<KeepsViewModel> keeps = _vs.GetKeepsByVaultId(id, userInfo?.Id);
           return Ok(keeps);
       }
       catch (System.Exception e)

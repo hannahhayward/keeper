@@ -33,14 +33,17 @@ import { vaultService } from '../services/VaultService'
 import { AppState } from '../AppState'
 import { router } from '../router'
 import Pop from '../utils/Notifier'
+import { logger } from '../utils/Logger'
 export default {
   setup() {
+    const route = useRoute()
     onMounted(async() => {
       try {
-        Pop.toast(AppState.account.id, 'the id')
-        await keepService.getKeepsByVaultId(route.params.id, AppState.account.id)
+        await keepService.getKeepsByVaultId(route.params.id)
         await vaultService.getById(route.params.id)
       } catch (error) {
+        Pop.toast(error, 'error')
+        logger.log(error, 'gotta be this guy')
         router.push({ name: 'Home' })
       }
     })
@@ -48,16 +51,15 @@ export default {
       try {
         await vaultService.getById(route.params.id)
       } catch (error) {
-        Pop.toast(error, 'watch didnt work')
+        Pop.toast(error, 'error')
       }
     })
-    const route = useRoute()
     return {
       async deleteVault(id) {
         try {
           await vaultService.deleteVault(id)
         } catch (error) {
-          Pop.toast(error, 'could not delete')
+          Pop.toast(error, 'error')
         }
       },
       route,

@@ -19,8 +19,8 @@ class KeepService {
     AppState.activeProfileKeeps = res.data
   }
 
-  async getKeepsByVaultId(id, userId) {
-    const res = await api.get(`api/vaults/${id}/keeps`, userId)
+  async getKeepsByVaultId(id) {
+    const res = await api.get(`api/vaults/${id}/keeps`)
     AppState.activeProfileKeeps = []
     AppState.activeVaultKeeps = res.data
     logger.log(res.data, 'keeps')

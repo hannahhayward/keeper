@@ -47,10 +47,10 @@ namespace keeper.Services
       }
       throw new Exception("nice try buddy this isnt yours");
     }
-    internal List<KeepsViewModel> GetKeepsByVaultId(int id)
+    internal List<KeepsViewModel> GetKeepsByVaultId(int id, string userId)
     {
       var vault = _vr.GetById(id);
-      if(vault.IsPrivate != false)
+      if(vault.IsPrivate != false && vault.CreatorId != userId)
       {
         throw new Exception("this vault is private");
       }
