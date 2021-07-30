@@ -68,6 +68,7 @@ export default {
       async createKeep() {
         try {
           await keepService.createKeep(state.newKeep)
+          window.alert('your keep has been created!')
         } catch (error) {
           window.alert(error, 'could not create keep')
         }

@@ -4,6 +4,7 @@
       <div class="col-10 m-auto">
         <h4>{{ vault.name }}</h4>
         <p>{{ vault.description }}</p>
+        <p>Keeps: {{ keeps.length }}</p>
         <router-link class="link" :to="{name: 'Profile', params:{id: vault.creatorId }}">
           <i class="mdi mdi-delete-outline" v-if="vault.creatorId === account.id" @click="deleteVault(vault.id)"></i>
         </router-link>

@@ -10,7 +10,7 @@
       <router-link class="link" :to="{name: 'Profile', params:{id: keep.creator.id }}">
         <div class="card-text d-flex">
           <div class="col-9 text-center">
-            <h5> {{ keep.name }}</h5>
+            <h6> {{ keep.name }}</h6>
           </div>
           <div class="col-2">
             <img :src="keep.creator.picture"

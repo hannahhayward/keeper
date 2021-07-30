@@ -28,7 +28,7 @@ export default {
           await vaultService.getById(id)
           router.push({ name: 'Vault', params: { id: id } })
         } catch (error) {
-          window.alert(error)
+          window.alert('this is a private vault')
           router.push({ name: 'Home' })
         }
       }

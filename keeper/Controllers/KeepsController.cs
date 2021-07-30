@@ -50,7 +50,7 @@ namespace keeper.Controllers
       }
     }
     [HttpGet("{id}")]
-    public ActionResult<Keep> GetById(int id)
+    public  ActionResult<Keep> GetById(int id)
     {
       try
       {
@@ -64,6 +64,7 @@ namespace keeper.Controllers
       }
     }
     [HttpPut("{id}")]
+    [Authorize]
     public async Task<ActionResult<Keep>> Update(int id, [FromBody] Keep keep)
     {
       try

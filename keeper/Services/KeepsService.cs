@@ -27,6 +27,8 @@ namespace keeper.Services
     public Keep GetById(int id)
     {
       var k = _kr.GetById(id);
+      k.Views += 1;
+      _kr.Update(k);
       if(k ==null)
       {
         throw new Exception("cannot find a keep with that Id");
@@ -36,15 +38,18 @@ namespace keeper.Services
     public Keep Update(Keep keep, string userId)
     {
       Keep original = _kr.GetById(keep.Id);
+      if(original.Keeps != keep.Keeps)
+      {
+        return _kr.Update(keep);
+      }
       if(keep == null)
       {
         throw new Exception("no keep found with that Id");
       }
-      
-      keep.Views = keep.Views > original.Views ? keep.Views : original.Views;
-      keep.Shares = keep.Shares > original.Shares ? keep.Shares : original.Shares;
-      keep.Keeps = keep.Keeps > original.Keeps ? keep.Keeps : original.Keeps;
-      return _kr.Update(keep);      
+      if(original.CreatorId != keep.CreatorId){
+        throw new Exception("cannot edit something that is not yours");
+      }
+      return _kr.Update(keep);
       
     }
     public void Delete(int id, string userId)

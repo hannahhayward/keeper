@@ -32,27 +32,27 @@ namespace keeper.Services
     }
     internal List<Vault> GetVaultsByProfileId(string id, string userId)
     {
-      var vaults = _pr.GetVaultsByProfileId(id);
+      List<Vault> vaults = _pr.GetVaultsByProfileId(id);
       List<Vault> publicvaults = new List<Vault>();
       if(vaults == null)
       {
         throw new Exception("this user has no vaults");
       }
-        if(userId == id)
+        if(userId == null)
         {
-          return vaults;
+          foreach(var vault in vaults)
+        {
+          if(vault.IsPrivate == false)
+          {
+            publicvaults.Add(vault);
+          }
         }
-        // if(userId != id)
+        // if(userId == null)
         // {
-        //   foreach(var vault in vaults)
-        // {
-        //   if(vault.IsPrivate == false)
-        //   {
-        //     publicvaults.Add(vault);
-        //   }
+        //   return publicvaults;
         // }
-        // return publicvaults;
-        // }
+        return publicvaults;
+        }
         return vaults;
     }
   }

@@ -26,7 +26,7 @@
                        id="newVaultTitle"
                        class="form-control"
                        placeholder="Title..."
-                       v-model="state.newVault.title"
+                       v-model="state.newVault.name"
                        @submit.prevent="createVault"
                 />
               </div>
@@ -80,6 +80,7 @@ export default {
       createVault() {
         try {
           vaultService.createVault(state.newVault)
+          window.alert('your vault has been created!')
         } catch (error) {
           window.alert(error, 'could not create vault')
         }

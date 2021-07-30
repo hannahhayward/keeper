@@ -2,13 +2,13 @@
   <div class="modal fade "
        id="keepModal"
        tabindex="-1"
-       aria-labelledby="exampleModalLabel"
+       :aria-labelledby="activeKeep.id"
        aria-hidden="true"
   >
     <div class="modal-dialog">
       <div class="modal-size">
         <div class="header bg-dark height">
-          <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close" @click="updateKeep(activeKeep)">
+          <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -44,7 +44,7 @@
                   </button>
                   <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuButton">
                     <div class="dropdown-option" v-for="v in vaults" :key="v.id" href="#" @click="addKeep(v.id)">
-                      {{ v.name }}
+                      {{ v.description }}
                       <div class="dropdown-divider"></div>
                     </div>
                   </div>
@@ -109,6 +109,8 @@ export default {
           AppState.newVaultKeep.creatorId = AppState.activeKeep.creatorId
           AppState.newVaultKeep.keepId = AppState.activeKeep.id
           vaultService.createVaultKeep(AppState.newVaultKeep)
+          AppState.activeKeep.keeps += 1
+          keepService.updateKeep(AppState.activeKeep)
           window.alert('keep has been added to your vault!')
         } catch (error) {
           window.alert(error)
@@ -120,15 +122,6 @@ export default {
           if (confirm === true) {
             keepService.deleteKeep(id)
           }
-        } catch (error) {
-          window.alert(error)
-        }
-      },
-      async updateKeep(keep) {
-        try {
-          const id = keep.creatorId
-          logger.log(keep, 'keep before service')
-          await keepService.updateKeep(keep, id)
         } catch (error) {
           window.alert(error)
         }

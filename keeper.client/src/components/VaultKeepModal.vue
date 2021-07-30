@@ -2,7 +2,7 @@
   <div class="modal fade"
        id="vaultKeepModal"
        tabindex="-1"
-       aria-labelledby="exampleModalLabel"
+       aria-labelledby="vaultKeepModal"
        aria-hidden="true"
   >
     <div class="modal-dialog">

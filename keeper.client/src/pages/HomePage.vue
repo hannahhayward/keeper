@@ -24,12 +24,12 @@ export default {
     ({ profile: computed(() => AppState.account) })
     onMounted(async() => {
       try {
-        await vaultService.getUserVaults(userId)
-        await keepService.getKeeps()
         if (userId !== undefined) {
           await profileService.getProfile(userId)
         }
         await profileService.getProfile(4)
+        await vaultService.getUserVaults(userId)
+        await keepService.getKeeps()
       } catch (error) {
         window.alert(error)
       }

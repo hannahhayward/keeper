@@ -32,10 +32,11 @@
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
+                  aria-label="dropdownMenuButton"
           >
 
           </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div class="dropdown-menu" aria-label="dropdownMenuButton" id="notLoggedInDropDown">
             <router-link class="link" :to="{name: 'Profile', params:{id:4 }}">
               <div class="dropdown-item" href="#">Profile</div>
             </router-link>
