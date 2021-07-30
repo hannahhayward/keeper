@@ -58,7 +58,6 @@
 import { reactive } from '@vue/reactivity'
 import { AppState } from '../AppState'
 import { keepService } from '../services/KeepService'
-import Pop from '../utils/Notifier'
 export default {
   setup() {
     const state = reactive({
@@ -70,7 +69,7 @@ export default {
         try {
           await keepService.createKeep(state.newKeep)
         } catch (error) {
-          Pop.toast(error, 'error')
+          window.alert(error, 'could not create keep')
         }
       }
     }

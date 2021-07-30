@@ -17,7 +17,6 @@ import { AppState } from '../AppState'
 import { computed } from '@vue/runtime-core'
 import { vaultService } from '../services/VaultService'
 import { router } from '../router'
-import Pop from '../utils/Notifier'
 
 export default {
   props: { vault: { type: Object, required: true } },
@@ -29,7 +28,8 @@ export default {
           await vaultService.getById(id)
           router.push({ name: 'Vault', params: { id: id } })
         } catch (error) {
-          Pop.toast(error, 'error')
+          window.alert(error)
+          router.push({ name: 'Home' })
         }
       }
     }

@@ -9,11 +9,11 @@
 </template>
 
 <script>
-import { computed, onMounted, watchEffect } from '@vue/runtime-core'
+import { computed, onMounted } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import { keepService } from '../services/KeepService'
 import { vaultService } from '../services/VaultService'
-import Pop from '../utils/Notifier'
+
 import { profileService } from '../services/ProfileService'
 
 export default {
@@ -26,10 +26,12 @@ export default {
       try {
         await vaultService.getUserVaults(userId)
         await keepService.getKeeps()
-        debugger
-        await profileService.getProfile(userId)
+        if (userId !== undefined) {
+          await profileService.getProfile(userId)
+        }
+        await profileService.getProfile(4)
       } catch (error) {
-        Pop.toast(error, 'error')
+        window.alert(error)
       }
     })
     return {

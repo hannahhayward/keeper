@@ -23,20 +23,25 @@
             Home
           </router-link>
         </li>
-        <li class="nav-item">
-          <router-link :to="{ name: 'Profile', params: {id: profile.id}}" class="nav-link">
-            Profile
-          </router-link>
-        </li>
       </ul>
       <span class="navbar-text">
-        <button
-          class="btn btn-outline-primary text-uppercase"
-          @click="login"
-          v-if="!user.isAuthenticated"
-        >
-          Login
-        </button>
+        <div class="dropleft" v-if="!user.isAuthenticated">
+          <button class="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+          >
+
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <router-link class="link" :to="{name: 'Profile', params:{id:4 }}">
+              <div class="dropdown-item" href="#">Profile</div>
+            </router-link>
+            <div class="dropdown-item" href="#" @click="login">Log In</div>
+          </div>
+        </div>
 
         <div class="dropdown" v-else>
           <div

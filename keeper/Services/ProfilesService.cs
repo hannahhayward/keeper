@@ -42,17 +42,17 @@ namespace keeper.Services
         {
           return vaults;
         }
-        if(userId != id)
-        {
-          foreach(var vault in vaults)
-        {
-          if(vault.IsPrivate == false)
-          {
-            publicvaults.Add(vault);
-          }
-        }
-        return publicvaults;
-        }
+        // if(userId != id)
+        // {
+        //   foreach(var vault in vaults)
+        // {
+        //   if(vault.IsPrivate == false)
+        //   {
+        //     publicvaults.Add(vault);
+        //   }
+        // }
+        // return publicvaults;
+        // }
         return vaults;
     }
   }

@@ -8,7 +8,7 @@
     <div class="modal-dialog">
       <div class="modal-size">
         <div class="header bg-dark height">
-          <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close" @click="updateKeep(activeKeep.id)">
+          <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close" @click="updateKeep(activeKeep)">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -55,7 +55,7 @@
             <div class="col-6"></div>
             <div class="col-6 text-right d-flex ">
               <div class="align">
-                <router-link class="link" style="text-decoration: none; color: inherit" :to="{name: 'Profile', params:{id: creator.id }}">
+                <router-link class="link" style="text-decoration: none; color: inherit" :to="{name: 'Profile', params:{id: creator.id }}" data-dismiss="modal">
                   {{ creator.name }}
                 </router-link>
                 <div v-if="account.id === activeKeep.creatorId" class="text-center">
@@ -63,7 +63,7 @@
                 </div>
               </div>
               <div class="pl-2">
-                <router-link class="link" :to="{name: 'Profile', params:{id: creator.id }}">
+                <router-link class="link" :to="{name: 'Profile', params:{id: creator.id }}" data-dismiss="modal">
                   <img :src="creator.picture" alt="" class="rounded-pill">
                 </router-link>
               </div>
@@ -82,7 +82,7 @@ import { computed, reactive } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import { vaultService } from '../services/VaultService'
 import { keepService } from '../services/KeepService'
-import Pop from '../utils/Notifier'
+import { logger } from '../utils/Logger'
 export default {
   setup() {
     const state = reactive({
@@ -102,22 +102,26 @@ export default {
           AppState.newVaultKeep.keepId = AppState.activeKeep.id
           vaultService.createVaultKeep(AppState.newVaultKeep)
         } catch (error) {
-          Pop.toast(error, 'error')
+          window.alert(error)
         }
       },
       async deleteKeep(id) {
         try {
-          keepService.deleteKeep(id)
+          const confirm = window.confirm('are you sure you wish to delete')
+          if (confirm === true) {
+            keepService.deleteKeep(id)
+          }
         } catch (error) {
-          Pop.toast(error, 'error')
+          window.alert(error)
         }
       },
       async updateKeep(keep) {
         try {
-          keep.views += 1
-          keepService.updateKeep(keep)
+          const id = keep.creatorId
+          logger.log(keep, 'keep before service')
+          await keepService.updateKeep(keep, id)
         } catch (error) {
-          Pop.toast(error, 'error')
+          window.alert(error)
         }
       }
     }

@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <div class="card">
+    <div class="card bg-dark">
       <img class="card-img-top"
            :src="keep.img"
            data-toggle="modal"
@@ -32,7 +32,6 @@ import { keepService } from '../services/KeepService'
 import { AppState } from '../AppState'
 import { computed } from '@vue/runtime-core'
 import { vaultService } from '../services/VaultService'
-import Pop from '../utils/Notifier'
 
 export default {
   props: { keep: { type: Object, required: true } },
@@ -44,23 +43,26 @@ export default {
       account: computed(() => AppState.account),
       async deleteVaultKeep(keepId) {
         try {
-          vaultService.deleteVaultKeep(keepId)
+          const confirm = window.confirm('are you sure you wish to delete')
+          if (confirm === true) {
+            vaultService.deleteVaultKeep(keepId)
+          }
         } catch (error) {
-          Pop.toast(error, 'error')
+          window.alert(error)
         }
       },
       async getById(id) {
         try {
           await keepService.getById(id)
         } catch (error) {
-          Pop.toast(error, 'error')
+          window.alert(error)
         }
       },
       async getProfile(id) {
         try {
           await profileService.getProfile(id)
         } catch (error) {
-          Pop.toast(error, 'error')
+          window.alert(error)
         }
       }
     }

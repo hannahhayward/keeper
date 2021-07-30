@@ -80,7 +80,7 @@ import { computed, reactive } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import { vaultService } from '../services/VaultService'
 import { keepService } from '../services/KeepService'
-import Pop from '../utils/Notifier'
+
 export default {
   setup() {
     const state = reactive({
@@ -103,14 +103,17 @@ export default {
           AppState.activeKeep.keeps += 1
           keepService.updateKeep(AppState.activeKeep)
         } catch (error) {
-          Pop.toast(error, 'error')
+          window.alert(error)
         }
       },
       async deleteKeep(id) {
         try {
-          keepService.deleteKeep(id)
+          const confirm = window.confirm('are you sure you wish to delete')
+          if (confirm === true) {
+            keepService.deleteKeep(id)
+          }
         } catch (error) {
-          Pop.toast(error, 'error')
+          window.alert(error)
         }
       },
       async updateKeep(keep) {
@@ -118,7 +121,7 @@ export default {
           keep.views += 1
           keepService.updateKeep(keep)
         } catch (error) {
-          Pop.toast(error, 'error')
+          window.alert(error)
         }
       }
     }

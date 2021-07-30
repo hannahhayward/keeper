@@ -64,15 +64,14 @@ namespace keeper.Controllers
       }
     }
     [HttpPut("{id}")]
-    [Authorize]
     public async Task<ActionResult<Keep>> Update(int id, [FromBody] Keep keep)
     {
       try
       {
           Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
           keep.Id = id;
-          keep.CreatorId = userInfo.Id;
-          Keep newKeep = _ks.Update(keep, userInfo.Id);
+          keep.CreatorId = userInfo?.Id;
+          Keep newKeep = _ks.Update(keep, userInfo?.Id);
           newKeep.Creator = userInfo;
           return Ok(newKeep);
       }

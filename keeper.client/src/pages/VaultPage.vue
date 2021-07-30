@@ -1,25 +1,27 @@
 <template>
   <div class="container-fluid bg-color text-light">
-    <div class="row">
+    <div class="row py-3 shadow">
       <div class="col-10 m-auto">
         <h4>{{ vault.name }}</h4>
         <p>{{ vault.description }}</p>
-        <p>{{ vault.name }}</p>
         <router-link class="link" :to="{name: 'Profile', params:{id: vault.creatorId }}">
           <i class="mdi mdi-delete-outline" v-if="vault.creatorId === account.id" @click="deleteVault(vault.id)"></i>
         </router-link>
       </div>
     </div>
-    <div class="row">
-      <div class="col-10 m-auto">
-        <p v-if="keeps.length == 0">
+    <div class="row py-5 ">
+      <div class="col-lg-10 m-auto">
+        <p v-if="keeps.length == 0" class="text-center">
           There is no keeps in this vault yet
+          <img src="https://i.pinimg.com/originals/5f/93/49/5f934966a1d20bae1909c9ef2278bd4c.gif" alt="sad dino">
         </p>
       </div>
     </div>
     <div class="row">
-      <div class="card-columns " v-if="keeps.length > 0">
-        <VaultKeepCard v-for="k in keeps" :key="k.id" :keep="k" />
+      <div class="col-lg-10 m-auto">
+        <div class="card-columns " v-if="keeps.length > 0">
+          <VaultKeepCard v-for="k in keeps" :key="k.id" :keep="k" />
+        </div>
       </div>
     </div>
   </div>
@@ -32,18 +34,17 @@ import { keepService } from '../services/KeepService'
 import { vaultService } from '../services/VaultService'
 import { AppState } from '../AppState'
 import { router } from '../router'
-import Pop from '../utils/Notifier'
-import { logger } from '../utils/Logger'
+
 export default {
   setup() {
     const route = useRoute()
+
     onMounted(async() => {
       try {
         await keepService.getKeepsByVaultId(route.params.id)
         await vaultService.getById(route.params.id)
       } catch (error) {
-        Pop.toast(error, 'error')
-        logger.log(error, 'gotta be this guy')
+        window.alert(error)
         router.push({ name: 'Home' })
       }
     })
@@ -51,15 +52,18 @@ export default {
       try {
         await vaultService.getById(route.params.id)
       } catch (error) {
-        Pop.toast(error, 'error')
+        window.alert(error)
       }
     })
     return {
-      async deleteVault(id) {
+      deleteVault(id) {
         try {
-          await vaultService.deleteVault(id)
+          const confirm = window.confirm('are you sure you wish to delete')
+          if (confirm === true) {
+            vaultService.deleteVault(id)
+          }
         } catch (error) {
-          Pop.toast(error, 'error')
+          window.alert(error)
         }
       },
       route,
@@ -73,5 +77,8 @@ export default {
 </script>
 
 <style>
+.shadow{
+  box-shadow: 0 0 0 2em #022933;;
+}
 
 </style>

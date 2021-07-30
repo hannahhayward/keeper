@@ -50,7 +50,7 @@ import { keepService } from '../services/KeepService'
 import { vaultService } from '../services/VaultService'
 import { useRoute } from 'vue-router'
 import { profileService } from '../services/ProfileService'
-import Pop from '../utils/Notifier'
+
 export default {
   setup() {
     const route = useRoute()
@@ -60,7 +60,7 @@ export default {
         profileService.getProfile(route.params.id)
         vaultService.getVaultsByProfileId(route.params.id)
       } catch (error) {
-        Pop.toast(error, 'error')
+        window.alert(error)
       }
     })
     return {

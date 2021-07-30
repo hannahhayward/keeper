@@ -35,7 +35,6 @@ import { profileService } from '../services/ProfileService'
 import { keepService } from '../services/KeepService'
 import { AppState } from '../AppState'
 import { computed } from '@vue/runtime-core'
-import Pop from '../utils/Notifier'
 
 export default {
   props: { keep: { type: Object, required: true } },
@@ -47,14 +46,14 @@ export default {
         try {
           await keepService.getById(id)
         } catch (error) {
-          Pop.toast(error, 'error')
+          window.alert(error, 'could not find a keep with that id')
         }
       },
       async getProfile(id) {
         try {
           await profileService.getProfile(id)
         } catch (error) {
-          Pop.toast(error, 'error')
+          window.alert(error, 'could not get profile')
         }
       }
     }
@@ -67,10 +66,8 @@ export default {
   height: 5vh;
 }
 .height{
-
       height: 97%;
     margin-bottom: -2rem;
-
 }
 .link{
   text-decoration: none;

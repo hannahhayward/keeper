@@ -69,7 +69,7 @@
 import { reactive } from '@vue/reactivity'
 import { AppState } from '../AppState'
 import { vaultService } from '../services/VaultService'
-import Pop from '../utils/Notifier'
+
 export default {
   setup() {
     const state = reactive({
@@ -81,7 +81,7 @@ export default {
         try {
           vaultService.createVault(state.newVault)
         } catch (error) {
-          Pop.toast(error, 'error')
+          window.alert(error, 'could not create vault')
         }
       }
     }

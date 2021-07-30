@@ -31,10 +31,10 @@ class KeepService {
   }
 
   async updateKeep(newKeep) {
-    const id = newKeep.id
-    const res = await api.put(`api/keeps/${id}`, newKeep)
-    logger.log(newKeep, 'view count go up?')
-    AppState.activeKeep = res.data
+    newKeep.views += 1
+    const res = await api.put('api/keeps/' + newKeep.id, newKeep)
+    logger.log(res.data, 'view count go up?')
+    // AppState.activeKeep = res.data
   }
 
   async deleteKeep(id) {

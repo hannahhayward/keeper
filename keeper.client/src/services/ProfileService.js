@@ -4,7 +4,7 @@ import { api } from './AxiosService'
 
 class ProfileService {
   async getProfile(id) {
-    if (id == null) {
+    if (id === undefined) {
       const res = await api.get('api/profiles/' + 4)
       AppState.activeProfile = res.data
     }

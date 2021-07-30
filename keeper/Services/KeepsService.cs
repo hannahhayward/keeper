@@ -40,14 +40,12 @@ namespace keeper.Services
       {
         throw new Exception("no keep found with that Id");
       }
-      if(original.CreatorId == keep.CreatorId)
-      {
+      
       keep.Views = keep.Views > original.Views ? keep.Views : original.Views;
       keep.Shares = keep.Shares > original.Shares ? keep.Shares : original.Shares;
       keep.Keeps = keep.Keeps > original.Keeps ? keep.Keeps : original.Keeps;
       return _kr.Update(keep);      
-      }
-      throw new Exception("nice try buddy this isnt yours");
+      
     }
     public void Delete(int id, string userId)
     {
