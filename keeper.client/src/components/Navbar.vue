@@ -23,6 +23,11 @@
             Home
           </router-link>
         </li>
+        <li class="nav-item">
+          <router-link :to="{ name: 'Profile', params: {id: profile.id}}" class="nav-link">
+            Profile
+          </router-link>
+        </li>
       </ul>
       <span class="navbar-text">
         <button
@@ -79,6 +84,7 @@ export default {
       dropOpen: false
     })
     return {
+      profile: computed(() => AppState.activeProfile),
       state,
       user: computed(() => AppState.user),
       async login() {

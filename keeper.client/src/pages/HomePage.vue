@@ -9,11 +9,12 @@
 </template>
 
 <script>
-import { computed, watchEffect } from '@vue/runtime-core'
+import { computed, onMounted, watchEffect } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import { keepService } from '../services/KeepService'
 import { vaultService } from '../services/VaultService'
 import Pop from '../utils/Notifier'
+import { profileService } from '../services/ProfileService'
 
 export default {
   name: 'Home',
@@ -21,12 +22,14 @@ export default {
     const userId = AppState.account.id
     const state =
     ({ profile: computed(() => AppState.account) })
-    watchEffect(async() => {
+    onMounted(async() => {
       try {
         await vaultService.getUserVaults(userId)
         await keepService.getKeeps()
+        debugger
+        await profileService.getProfile(userId)
       } catch (error) {
-        Pop.toast(error, 'one of the onmounteds did not work bruh')
+        Pop.toast(error, 'error')
       }
     })
     return {

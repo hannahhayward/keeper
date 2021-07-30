@@ -26,13 +26,10 @@ export default {
       activeVault: computed(() => AppState.activeVault),
       async getById(id, privacy) {
         try {
-          // if (privacy !== false && AppState.activeVault.creatorId !== AppState.account.id) {
-          //   // router.push({ path: 'Home' })
-          // }
           await vaultService.getById(id)
           router.push({ name: 'Vault', params: { id: id } })
         } catch (error) {
-          Pop.toast('not working')
+          Pop.toast(error, 'error')
         }
       }
     }

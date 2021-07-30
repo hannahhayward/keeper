@@ -1,8 +1,6 @@
 <template>
   <div class="">
     <div class="card"
-         data-toggle="modal"
-         data-target="#keepModal"
          @click="getById(keep.id),getProfile(keep.creatorId)"
     >
       <img class="card-img-top"
@@ -10,7 +8,10 @@
            alt="Card image cap"
       >
       <div class="card-img-overlay">
-        <div class="card-body height"></div>
+        <div class="card-body height"
+             data-toggle="modal"
+             data-target="#keepModal"
+        ></div>
         <router-link class="link" :to="{name: 'Profile', params:{id: keep.creator.id }}">
           <div class="card-text d-flex ">
             <div class="col-9 text-center">
@@ -46,14 +47,14 @@ export default {
         try {
           await keepService.getById(id)
         } catch (error) {
-          Pop.toast(error, 'not working')
+          Pop.toast(error, 'error')
         }
       },
       async getProfile(id) {
         try {
           await profileService.getProfile(id)
         } catch (error) {
-          Pop.toast(error, 'not working')
+          Pop.toast(error, 'error')
         }
       }
     }

@@ -103,14 +103,14 @@ export default {
           AppState.activeKeep.keeps += 1
           keepService.updateKeep(AppState.activeKeep)
         } catch (error) {
-          Pop.toast(error, 'couldnt add to your vault')
+          Pop.toast(error, 'error')
         }
       },
       async deleteKeep(id) {
         try {
           keepService.deleteKeep(id)
         } catch (error) {
-          Pop.toast(error, 'could not delete')
+          Pop.toast(error, 'error')
         }
       },
       async updateKeep(keep) {
@@ -118,7 +118,7 @@ export default {
           keep.views += 1
           keepService.updateKeep(keep)
         } catch (error) {
-          Pop.toast(error, 'nah')
+          Pop.toast(error, 'error')
         }
       }
     }

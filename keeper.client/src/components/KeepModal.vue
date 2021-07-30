@@ -8,7 +8,7 @@
     <div class="modal-dialog">
       <div class="modal-size">
         <div class="header bg-dark height">
-          <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close" @click="updateKeep(activeKeep.id)">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -55,7 +55,7 @@
             <div class="col-6"></div>
             <div class="col-6 text-right d-flex ">
               <div class="align">
-                <router-link class="link" style="text-decoration: none; color: inherit" :to="{name: 'Profile', params:{id: activeProfile.id }}">
+                <router-link class="link" style="text-decoration: none; color: inherit" :to="{name: 'Profile', params:{id: creator.id }}">
                   {{ creator.name }}
                 </router-link>
                 <div v-if="account.id === activeKeep.creatorId" class="text-center">
@@ -63,7 +63,7 @@
                 </div>
               </div>
               <div class="pl-2">
-                <router-link class="link" :to="{name: 'Profile', params:{id: activeProfile.id }}">
+                <router-link class="link" :to="{name: 'Profile', params:{id: creator.id }}">
                   <img :src="creator.picture" alt="" class="rounded-pill">
                 </router-link>
               </div>
@@ -95,24 +95,21 @@ export default {
       vaults: computed(() => AppState.userVaults),
       account: computed(() => AppState.account),
       creator: computed(() => AppState.activeProfile),
-      activeProfile: computed(() => AppState.activeProfile),
       async addKeep(body) {
         try {
           AppState.newVaultKeep.vaultId = body
           AppState.newVaultKeep.creatorId = AppState.activeKeep.creatorId
           AppState.newVaultKeep.keepId = AppState.activeKeep.id
           vaultService.createVaultKeep(AppState.newVaultKeep)
-          AppState.activeKeep.keeps += 1
-          keepService.updateKeep(AppState.activeKeep)
         } catch (error) {
-          Pop.toast(error, 'couldnt add to your vault')
+          Pop.toast(error, 'error')
         }
       },
       async deleteKeep(id) {
         try {
           keepService.deleteKeep(id)
         } catch (error) {
-          Pop.toast(error, 'could not delete')
+          Pop.toast(error, 'error')
         }
       },
       async updateKeep(keep) {
@@ -120,7 +117,7 @@ export default {
           keep.views += 1
           keepService.updateKeep(keep)
         } catch (error) {
-          Pop.toast(error, 'nah')
+          Pop.toast(error, 'error')
         }
       }
     }

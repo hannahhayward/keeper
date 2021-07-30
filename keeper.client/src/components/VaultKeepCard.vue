@@ -46,21 +46,21 @@ export default {
         try {
           vaultService.deleteVaultKeep(keepId)
         } catch (error) {
-          Pop.toast(error, 'couldnt delete vault keep')
+          Pop.toast(error, 'error')
         }
       },
       async getById(id) {
         try {
           await keepService.getById(id)
         } catch (error) {
-          Pop.toast('not working')
+          Pop.toast(error, 'error')
         }
       },
       async getProfile(id) {
         try {
           await profileService.getProfile(id)
         } catch (error) {
-          Pop.toast('not working')
+          Pop.toast(error, 'error')
         }
       }
     }

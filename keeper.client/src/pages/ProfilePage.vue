@@ -60,7 +60,7 @@ export default {
         profileService.getProfile(route.params.id)
         vaultService.getVaultsByProfileId(route.params.id)
       } catch (error) {
-        Pop.toast(error, 'didnt get anything')
+        Pop.toast(error, 'error')
       }
     })
     return {

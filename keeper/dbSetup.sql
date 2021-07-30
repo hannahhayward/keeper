@@ -47,3 +47,5 @@ CREATE TABLE IF NOT EXISTS profiles(
   picture varchar(255) COMMENT 'User Picture'
 ) default charset utf8 COMMENT '';
  DROP Table keeps;
+INSERT INTO accounts (name, picture, id)
+VALUES ('unknownUser_1', 'https://bnaic2021.uni.lu/wp-content/uploads/sites/219/2021/04/avatars-fuFi52Szkbdm16Gg-arzAGQ-t500x500.jpg', 4);

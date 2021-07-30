@@ -1,7 +1,6 @@
 import { AppState } from '../AppState'
 import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
-import { vaultService } from './VaultService'
 
 class KeepService {
   async getKeeps(url = 'api/keeps') {

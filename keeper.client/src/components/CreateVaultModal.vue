@@ -81,7 +81,7 @@ export default {
         try {
           vaultService.createVault(state.newVault)
         } catch (error) {
-          Pop.toast('could not create vault')
+          Pop.toast(error, 'error')
         }
       }
     }

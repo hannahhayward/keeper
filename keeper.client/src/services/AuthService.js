@@ -29,6 +29,7 @@ AuthService.on(AuthService.AUTH_EVENTS.AUTHENTICATED, async function() {
   AppState.user = AuthService.user
   await accountService.getAccount()
   await vaultService.getUserVaults(AppState.account.id)
+  await profileService.getProfile(AppState.account.id)
   // socketService.authenticate(AuthService.bearer)
   // NOTE if there is something you want to do once the user is authenticated, place that here
 })

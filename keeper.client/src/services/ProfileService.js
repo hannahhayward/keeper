@@ -4,8 +4,11 @@ import { api } from './AxiosService'
 
 class ProfileService {
   async getProfile(id) {
+    if (id == null) {
+      const res = await api.get('api/profiles/' + 4)
+      AppState.activeProfile = res.data
+    }
     const res = await api.get('api/profiles/' + id)
-    logger.log(res.data, 'profile')
     AppState.activeProfile = res.data
   }
 

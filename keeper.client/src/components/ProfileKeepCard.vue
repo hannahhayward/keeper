@@ -40,14 +40,14 @@ export default {
         try {
           await keepService.getById(id)
         } catch (error) {
-          Pop.toast('not working')
+          Pop.toast(error, 'error')
         }
       },
       async getProfile(id) {
         try {
           await profileService.getProfile(id)
         } catch (error) {
-          Pop.toast('not working')
+          Pop.toast(error, 'error')
         }
       }
     }

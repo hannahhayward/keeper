@@ -70,7 +70,7 @@ export default {
         try {
           await keepService.createKeep(state.newKeep)
         } catch (error) {
-          Pop.toast(error, 'could not create keep')
+          Pop.toast(error, 'error')
         }
       }
     }
