@@ -7,19 +7,38 @@ namespace keeper.Services
 {
   public class CommentsService
   {
+    
+    private readonly KeepsRepository _kr;
     private readonly CommentsRepository _cr;
-    public CommentsService(CommentsRepository cr)
+
+    public CommentsService(KeepsRepository kr, CommentsRepository cr)
     {
+      _kr = kr;
       _cr = cr;
     }
-    public Comment Create(Comment comment)
+
+    public Comment Create(Comment comment, string userId)
     {
+      Keep keep = _kr.GetById(comment.KeepId);
+      if(userId == null)
+      {
+        throw new Exception("log in please");
+      }
       return _cr.Create(comment);
     }
     public List<Comment> GetByKeepId(int id)
     {
       var comments = _cr.GetByKeepId(id);
       return comments;
+    }
+    public Comment GetById(int id, string userId)
+    {
+      var comment = _cr.GetById(id);
+      if(comment != null && userId == comment.CreatorId)
+      {
+        return comment;
+      }
+      throw new Exception("cannot get this comment");
     }
     public Comment Update(Comment comment, int id, string userId)
     {
