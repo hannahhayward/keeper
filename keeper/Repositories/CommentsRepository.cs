@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Dapper;
@@ -36,6 +37,22 @@ namespace keeper.Repositories
         c.Creator = p;
         return c;
       }, new { id }).FirstOrDefault();
+    }
+    internal List<Comment> GetByKeepId(int id) 
+    {
+      string sql = @"
+      SELECT 
+      k.*,
+      c.*,
+      a.*
+      FROM keeps k
+      JOIN accounts a on c.creatorId = a.id
+      Where k.id = @id;";
+      return _db.Query<Comment, Profile, Comment>(sql, (c, p) =>
+      {
+        c.Creator = p;
+        return c;
+      }, new { id }).ToList();
     }
     internal Comment Update(Comment comment)
     {
