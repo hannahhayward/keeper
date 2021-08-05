@@ -1,6 +1,7 @@
 import { AppState } from '../AppState'
 import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
+import { keepService } from './KeepService'
 
 class VaultService {
   async getVaultsByProfileId(id) {
@@ -37,8 +38,8 @@ class VaultService {
     AppState.activeProfileVaults = AppState.activeProfileVaults.filter(v => v.id !== id)
   }
 
-  async deleteVaultKeep(keepId) {
-    AppState.activeVaultKeeps = AppState.activeVaultKeeps.filter(k => k.id !== keepId)
+  async deleteVaultKeep(vkId) {
+    AppState.activeVaultKeeps = AppState.activeVaultKeeps.filter(k => k.id !== vkId)
   }
 }
 export const vaultService = new VaultService()

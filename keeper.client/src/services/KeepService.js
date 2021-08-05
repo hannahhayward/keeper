@@ -31,7 +31,6 @@ class KeepService {
   }
 
   async updateKeep(newKeep) {
-    newKeep.views += 1
     const res = await api.put('api/keeps/' + newKeep.id, newKeep)
     logger.log(res.data, 'view count go up?')
     // AppState.activeKeep = res.data

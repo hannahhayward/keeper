@@ -12,7 +12,7 @@
       <h5 class="card-title">
         {{ keep.name }}
       </h5>
-      <i v-if="vault.creatorId === account.id" class="mdi mdi-delete-outline" @click="deleteVaultKeep(keep.id)"></i>
+      <i v-if="vault.creatorId === account.id" class="mdi mdi-delete-outline" @click="deleteVaultKeep(keep)"></i>
       <router-link class="link" :to="{name: 'Profile', params:{id: keep.creator.id }}">
         <p class="card-text align-text-bottom">
           {{ keep.creator.name }}
@@ -32,6 +32,7 @@ import { keepService } from '../services/KeepService'
 import { AppState } from '../AppState'
 import { computed } from '@vue/runtime-core'
 import { vaultService } from '../services/VaultService'
+import { logger } from '../utils/Logger'
 
 export default {
   props: { keep: { type: Object, required: true } },
@@ -41,11 +42,18 @@ export default {
       activeProfile: computed(() => AppState.activeProfile),
       vault: computed(() => AppState.activeVault),
       account: computed(() => AppState.account),
-      async deleteVaultKeep(keepId) {
+      async deleteVaultKeep(keep) {
         try {
+          logger.log(keep, 'keep before service')
           const confirm = window.confirm('are you sure you wish to delete')
+          logger.log(keep.id, 'keep id before service')
           if (confirm === true) {
-            vaultService.deleteVaultKeep(keepId)
+            // TODO get this decrement to work
+            // await keepService.getById(keep.id)
+            // this.activeKeep -= 1
+            // logger.log(this.activeKeep)
+            // keepService.updateKeep(this.activeKeep.id, this.activeKeep)
+            await vaultService.deleteVaultKeep(keep.vaultKeepId)
           }
         } catch (error) {
           window.alert(error)

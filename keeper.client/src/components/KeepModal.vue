@@ -83,7 +83,6 @@ import { computed, reactive } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import { vaultService } from '../services/VaultService'
 import { keepService } from '../services/KeepService'
-import { logger } from '../utils/Logger'
 import Pop from '../utils/Notifier'
 export default {
 
