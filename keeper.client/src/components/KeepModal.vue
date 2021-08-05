@@ -84,7 +84,9 @@ import { AppState } from '../AppState'
 import { vaultService } from '../services/VaultService'
 import { keepService } from '../services/KeepService'
 import { logger } from '../utils/Logger'
+import Pop from '../utils/Notifier'
 export default {
+
   setup() {
     const state = reactive({
       profile: AppState.account,
@@ -111,7 +113,11 @@ export default {
           vaultService.createVaultKeep(AppState.newVaultKeep)
           AppState.activeKeep.keeps += 1
           keepService.updateKeep(AppState.activeKeep)
-          window.alert('keep has been added to your vault!')
+          Pop.toast({
+            title: 'confirm',
+            display: 'success',
+            position: 'center-start'
+          })
         } catch (error) {
           window.alert(error)
         }

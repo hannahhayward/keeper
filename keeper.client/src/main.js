@@ -3,6 +3,7 @@ import 'jquery'
 import 'popper.js'
 import '@mdi/js'
 import '@mdi/font/css/materialdesignicons.css'
+
 import { createApp } from 'vue'
 // @ts-ignore
 import App from './App.vue'
