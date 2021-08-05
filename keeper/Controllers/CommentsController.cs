@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CodeWorks.Auth0Provider;
 using keeper.Models;
@@ -49,13 +50,13 @@ namespace keeper.Controllers
           return BadRequest(e.Message);
       }
     }
-    [HttpGet("{id}")]
-    public ActionResult<Comment> GetById(int id, string userId)
+    [HttpGet("keeps/${id}/comments")]
+    public ActionResult<Comment> GetByKeepId(int id)
     {
       try
       {
-          Comment c = _cs.GetById(id, userId);
-          return Ok(c);
+        List<Comment> comments = _cs.GetByKeepId(id);
+          return Ok(comments);
       }
       catch (System.Exception e)
       {
