@@ -26,7 +26,7 @@
       </ul>
       <span class="navbar-text">
         <div class="dropleft" v-if="!user.isAuthenticated">
-          <button class="btn btn-secondary dropdown-toggle"
+          <button class="btn btn-info dropdown-toggle"
                   type="button"
                   id="dropdownMenuButton"
                   data-toggle="dropdown"
@@ -37,9 +37,6 @@
 
           </button>
           <div class="dropdown-menu" aria-label="dropdownMenuButton" id="notLoggedInDropDown">
-            <router-link class="link" :to="{name: 'Profile', params:{id:4 }}">
-              <div class="dropdown-item" href="#">Profile</div>
-            </router-link>
             <div class="dropdown-item" href="#" @click="login">Log In</div>
           </div>
         </div>

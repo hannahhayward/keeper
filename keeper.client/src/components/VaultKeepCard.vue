@@ -53,7 +53,7 @@ export default {
             // this.activeKeep -= 1
             // logger.log(this.activeKeep)
             // keepService.updateKeep(this.activeKeep.id, this.activeKeep)
-            await vaultService.deleteVaultKeep(keep.vaultKeepId)
+            await vaultService.deleteVaultKeep(keep)
           }
         } catch (error) {
           window.alert(error)

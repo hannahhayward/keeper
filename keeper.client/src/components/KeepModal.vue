@@ -16,7 +16,7 @@
           <div class="row text-right">
             <img class="modal-img h-50 w-50 col-6" :src="activeKeep.img" alt="">
             <div class="col-6 text-center">
-              <div class="col-10">
+              <div class="col-lg-10">
                 <h6>
                   {{ activeKeep.name }}
                 </h6>
@@ -31,7 +31,25 @@
                   <p>{{ activeKeep.views }}</p>
                   <p>{{ activeKeep.keeps }}</p>
                 </span>
-                <div class="dropdown text-center">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-2 py-2">
+              <div v-if="account.id === activeKeep.creatorId" class="text-right">
+                <i class="mdi mdi-delete-outline " @click="deleteKeep(activeKeep.id)"></i>
+              </div>
+              <div v-if="account.id === activeVault.creatorId" class="text-right">
+                <i class="mdi mdi-delete-outline " @click="deleteKeep(activeKeep.id)"></i>
+              </div>
+            </div>
+            <div class="col-lg-6 text-right d-flex ">
+              <div class="align">
+                <router-link class="link" style="text-decoration: none; color: inherit" :to="{name: 'Profile', params:{id: creator.id }}" data-dismiss="modal">
+                  <!-- <p>{{ creator.name }}</p> -->
+                </router-link>
+                <div class="dropdown text-center pb-1">
                   <button class="btn btn-info dropdown-toggle"
                           type="button"
                           id="vaultDropdownMenu"
@@ -48,19 +66,6 @@
                       <div class="dropdown-divider"></div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-6"></div>
-            <div class="col-6 text-right d-flex ">
-              <div class="align">
-                <router-link class="link" style="text-decoration: none; color: inherit" :to="{name: 'Profile', params:{id: creator.id }}" data-dismiss="modal">
-                  <p>{{ creator.name }}</p>
-                </router-link>
-                <div v-if="account.id === activeKeep.creatorId" class="text-center">
-                  <i class="mdi mdi-delete-outline" @click="deleteKeep(activeKeep.id)"></i>
                 </div>
               </div>
               <div class="pl-2">
@@ -93,6 +98,7 @@ export default {
     })
     return {
       state,
+      activeVault: computed(() => AppState.activeVault),
       activeKeep: computed(() => AppState.activeKeep),
       vaults: computed(() => AppState.activeProfileVaults),
       account: computed(() => AppState.account),
@@ -112,11 +118,13 @@ export default {
           vaultService.createVaultKeep(AppState.newVaultKeep)
           AppState.activeKeep.keeps += 1
           keepService.updateKeep(AppState.activeKeep)
-          Pop.toast({
-            title: 'confirm',
-            display: 'success',
-            position: 'center-start'
-          })
+          window.confirm('keep has been added to your vault!')
+          // TODO figure out why swal wont work
+          // Pop.toast({
+          //   title: 'confirm',
+          //   display: 'success',
+          //   position: 'center-start'
+          // })
         } catch (error) {
           window.alert(error)
         }
