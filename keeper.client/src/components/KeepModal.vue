@@ -89,6 +89,7 @@ import { AppState } from '../AppState'
 import { vaultService } from '../services/VaultService'
 import { keepService } from '../services/KeepService'
 import Pop from '../utils/Notifier'
+import { logger } from '../utils/Logger'
 export default {
 
   setup() {
@@ -116,7 +117,8 @@ export default {
           AppState.newVaultKeep.creatorId = AppState.activeKeep.creatorId
           AppState.newVaultKeep.keepId = AppState.activeKeep.id
           vaultService.createVaultKeep(AppState.newVaultKeep)
-          AppState.activeKeep.keeps += 1
+          AppState.activeKeep.keeps +=
+          logger.log(AppState.activeKeep)
           keepService.updateKeep(AppState.activeKeep)
           window.confirm('keep has been added to your vault!')
           // TODO figure out why swal wont work

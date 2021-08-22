@@ -41,6 +41,7 @@ class VaultService {
   async deleteVaultKeep(keep) {
     await api.delete('api/vaultkeeps/' + keep.vaultKeepId)
     AppState.activeVaultKeeps = AppState.activeVaultKeeps.filter(k => k.id !== keep.vaultKeepId)
+    keepService.getById(keep.keepId)
   }
 }
 export const vaultService = new VaultService()
